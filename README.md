@@ -38,6 +38,8 @@ This module is the first iteration out of three modules to be object oriented ma
 - **Is easy to learn and use.** The module has been designed with beginner programmers in mind. It only requires beginner scripting to get the system up and working. *It removes the hassle of creating a complex system of your own.*
 - **Regularly updated.** The module is always being updated with feature updates as well as bug fixes.
 
+---
+
 Want to use this module in your game/project? Use the resources below to learn how the module works:
 
 - Use the API and sample code included with the module
