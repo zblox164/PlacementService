@@ -1,4 +1,4 @@
-# PlacementModuleV3
+# Placement Module V3
 
 This module was developed using and intended for Roblox Studio
 
@@ -30,7 +30,7 @@ More coming soon!
 
 ---
 
-This module has been written and developed by zblox164 and is the first iteration out of three modules to be object oriented. This placement kit is the **easiest** published placement system on the Roblox platform!
+This module is the first iteration out of three modules to be object oriented making it even more powerful. It is also the **easiest** published placement system kit on the Roblox platform!
 
 ## Benefits of this module
 
@@ -44,3 +44,5 @@ Want to use this module in your game/project? Use the resources below to learn h
 - [Dev forum tutorial](https://devforum.roblox.com/t/how-to-use-my-placement-module-v3/698753/1)
 - [My official tutorial video](https://www.youtube.com/watch?v=OD553c2raho)
 - [Placement Module Wiki]()
+
+This module and all of its content was written by [zblox164](https://www.roblox.com/users/60715914/profile). You can get the module in the Roblox library [here](https://www.roblox.com/library/5073110873/Placement-Module-V3).
