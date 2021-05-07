@@ -24,8 +24,8 @@ local function startPlacement()
 	contextActionService:BindAction("place", clientPlacement, false, Enum.UserInputType.MouseButton1)
 	placement:activate(model.Name, itemHolder, plot, true, true, false) -- assume variables are set
 	
-  if userOwnsIgnoreCollisions then -- Assume this code is valid. Example of if you toggled collisions to false if a player owns a gamepass
-	  placement:editAttribute("Collisions", false)
+	if userOwnsIgnoreCollisions then -- Assume this code is valid. Example of if you toggled collisions to false if a player owns a gamepass
+		placement:editAttribute("Collisions", false)
 	else
 		placement:editAttribute("Collisions", true)
 	end
