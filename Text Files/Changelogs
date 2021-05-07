@@ -1,1 +1,75 @@
+--[[
 
+Current Version - V1.40
+Written by zblox164. Released on 2020-05-22
+
+Change log:
+
+2020-05-22 V1.0 - Details:
+	- The module has been released.
+2020-05-24 V1.1 - Details:
+	- Fixed bugs
+	- Improved snapping
+	- Added Placement cooldowns
+2020-05-26 V1.11 Details:
+	- Fixed bugs
+2020-06-15 V1.11
+	- Released YouTube tutorial
+2020-07-07 V1.12 - Details:
+	- Fixed bugs
+2020-07-15 V1.13 - Details:
+	- Optimized math (now uses x * 0.5 instead of x / 2)
+	- Code is more readable as a result of comments
+	- Added a maxRange variable which controls how far the model can be placed from the character
+2020-07-28 V1.14 - Details:
+	- Added better round function
+	- Improved input (now uses ContextActionService instead of UserInputService)
+2020-07-30 V1.15 - Details:
+	- Fixed a problem where keybinds were set automaticly and not by the user
+2020-08-01 V1.16 - Details:
+	- Fixed issue where exploters could leave the plot
+	- Minor improvements to code readability
+2020-08-02 V1.17 - Details:
+	- Improved accuracy when moving models
+	- Minor improvements and bug fixes
+2020-10-03 V1.18 - Details:
+	- Improved timing when starting placement; models will instantly be at the mouse position when activating placement
+	- Fixed major bugs: Terminate function should no longer error. Activate function should no longer produce errors
+	- Typo fixes
+	- Minor improvements and fixes
+2020-10-04 V1.19 - Details:
+	- Added new setting, "instantActivation". See the description of it below
+	- Added new selection box feature. You can now toggle a selection box around your model when placing
+	- Added gridFadeIn and gridFadeOut toggles. See the description of it below
+	- Minor improvements and fixes
+	- Typo fixes
+2020-10-06 V1.20 - Details:
+	- Urgent and critical bug fixed
+	- Added collision color support for selection boxes
+	- Fixed issue with the module not resetting target filter
+	- Added thumbnail
+2021-2-10 V1.30 - Details:
+	- Minor bug fixes
+	- New autoplace feature
+	- Added auto anchor
+	- Minor improvements
+	- Improved thumbnail
+2021-05-06 V1.40 - Details:
+	Module changes
+	 - Added Xbox support
+	 - Added Xbox haptic feedback
+	 - Added Sound feedback on placement
+	 - Added editAttribute() which now allows you to change settings such as interpolation
+	 - Module now uses attributes instead of variables for user settings
+	 - Major bug fixes and improvements
+		Noteable fix: Movement is now relative to the plot.
+		Noteable fix: Stacking now ignores objects not within the your item location folder
+		Noteable change: Modified state "in-active" to "inactive".
+	Other changes
+	 - Moved changelogs to separate script
+	 - Moved API to separate script
+	 - Updated Extras script
+	 - Updated API
+]]
+
+-- Created and written by zblox164
