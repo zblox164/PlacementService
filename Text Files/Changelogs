@@ -1,6 +1,6 @@
 --[[
 
-Current Version - V1.40
+Current Version - V1.41
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -70,6 +70,14 @@ Change log:
 	 - Moved API to separate script
 	 - Updated Extras script
 	 - Updated API
+2021-06-29 V1.41 - Details:
+	Module changes
+	- Major bug fixes
+		Noteable fix: Fixed issue where models motion becomes inverted when on rotated planes.
+	- Minor improvements
+		Noteable improvement: The module now uses the new Pivot API.
+	Other changes
+	 - Fixed typo in the API
 ]]
 
 -- Created and written by zblox164
