@@ -13,6 +13,7 @@ Zblox's Placement module V3 is a feature packed script that handles all the esse
 - Auto place system
 - Collisions
 - Cool down timer for placement
+- Haptic feedback (XBOX)
 - Grid fade in/out toggles
 - Cross platform support for PC and XBOX
 - Custom callback functions on placement
@@ -34,7 +35,7 @@ This module is the first iteration out of three modules to be object oriented ma
 
 ## Benefits of this module
 
-- **Includes many pre-built features.** 17 Are listed above.
+- **Includes many pre-built features.** 18 Are listed above.
 - **Is easy to learn and use.** The module has been designed with beginner programmers in mind. It only requires beginner scripting to get the system up and working. *It removes the hassle of creating a complex system of your own.*
 - **Regularly updated.** The module is always being updated with feature updates as well as bug fixes.
 
