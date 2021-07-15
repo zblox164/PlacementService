@@ -1,6 +1,6 @@
 --[[
 
-Current Version - V1.40
+Current Version - V1.41
 Written by zblox164. Initial release (V1.0) on 2020-05-22
 
 As of version 1.40, the changelogs have been removed from the module.	
@@ -12,7 +12,6 @@ For FAQ and extra info, open the 'Extras' script.
 -- DO NOT EDIT PAST THIS POINT
 
 local placement = {}
-
 placement.__index = placement
 
 -- SETTINGS (DO NOT EDIT SETTINGS IN THE SCRIPT. USE THE ATTRIBUTES INSTEAD)
@@ -166,13 +165,13 @@ local function editHitboxColor()
 	if primary then
 		if currentState >= 3 then
 			primary.Color = collisionColor
-			
+
 			if includeSelectionBox then
 				selection.Color3 = selectionCollisionColor
 			end
 		else
 			primary.Color = hitboxColor
-			
+
 			if includeSelectionBox then
 				selection.Color3 = selectionColor
 			end
@@ -238,7 +237,7 @@ local function displayGrid()
 	gridTex.Texture = gridTexture
 	gridTex.Face = Enum.NormalId.Top
 	gridTex.Transparency = 1
-	
+
 	if smartDisplay then
 		if GRID_UNIT%2 == 0 then
 			gridTex.StudsPerTileU = 2
@@ -254,13 +253,13 @@ local function displayGrid()
 		gridTex.StudsPerTileU = gridTextureScale
 		gridTex.StudsPerTileV = gridTextureScale
 	end
-	
+
 	if gridFadeIn then
 		spawn(function()
 			for i = 1, 0, -0.1 do
 				if currentState ~= 4 then
 					gridTex.Transparency = i
-					
+
 					wait()
 				end
 			end
@@ -335,11 +334,11 @@ local function bounds(c)
 		LOWER_Z_BOUND = plot.Position.Z - (plot.Size.Z*0.5)	+ cz
 		UPPER_Z_BOUND = plot.Position.Z + (plot.Size.Z*0.5) - cz
 	end
-	
+
 	local newX = clamp(c.X, LOWER_X_BOUND, UPPER_X_BOUND)
 	local newZ = clamp(c.Z, LOWER_Z_BOUND, UPPER_Z_BOUND)
 	local newCFrame = cframe(newX, y, newZ)
-	
+
 	return newCFrame*anglesXYZ(0, rot*pi/180, 0)
 end
 
@@ -348,7 +347,7 @@ local function snapCFrame(c)
 	local newX = round(c.X/GRID_UNIT)*GRID_UNIT
 	local newZ = round(c.Z/GRID_UNIT)*GRID_UNIT
 	local newCFrame = cframe(newX, 0, newZ)
-	
+
 	return newCFrame
 end
 
@@ -357,18 +356,18 @@ local function calculateItemLocation()
 	if currentRot then
 		cx = primary.Size.X*0.5
 		cz = primary.Size.Z*0.5
-		
+
 		x, z = mouse.Hit.X - cx, mouse.Hit.Z - cz
 	else
 		cx = primary.Size.Z*0.5
 		cz = primary.Size.X*0.5
-		
+
 		x, z = mouse.Hit.X - cx, mouse.Hit.Z - cz
 	end
-	
+
 	-- Clamps y to a max height above the plot position
 	y = clamp(y, initialY, maxHeight + initialY)
-	
+
 	-- Changes y depending on mouse target
 	if stackable and mouse.Target and mouse.Target:IsDescendantOf(placedObjects) or mouse.Target == plot then
 		y = calculateYPos(mouse.Target.Position.Y, mouse.Target.Size.Y, primary.Size.Y)
@@ -376,15 +375,16 @@ local function calculateItemLocation()
 
 	if moveByGrid then
 		-- Calculates the correct position
+		local pltCFrame = cframe(plot.CFrame.X, plot.CFrame.Y, plot.CFrame.Z)
 		pos = cframe(x, 0, z)
-		pos = snapCFrame(plot.CFrame:Inverse()*pos)
-		finalC = pos*plot.CFrame*cframe(cx, 0, cz)
+		pos = snapCFrame(pltCFrame:Inverse()*pos)
+		finalC = pos*pltCFrame*cframe(cx, 0, cz)
 	else
 		finalC = cframe(x, y, z)*cframe(cx, 0, cz)
 	end
-	
+
 	finalC = bounds(finalC)
-	
+
 	return finalC	
 end
 
@@ -407,11 +407,11 @@ local function translateObj()
 		else
 			range = false
 		end
-		
+
 		checkHitbox()
 		editHitboxColor()
-		
-		object:SetPrimaryPartCFrame(primary.CFrame:Lerp(calculateItemLocation(), speed))
+
+		object:PivotTo(primary.CFrame:Lerp(calculateItemLocation(), speed))
 	end
 end
 
@@ -483,7 +483,7 @@ end
 local function bindInputs()
 	contextActionService:BindAction("Rotate", rotate, false, rotateKey, xboxRotate)
 	contextActionService:BindAction("Terminate", TERMINATE_PLACEMENT, false, terminateKey, xboxTerminate)
-	
+
 	if enableFloors and not stackable then
 		contextActionService:BindAction("Raise", raiseFloor, false, raiseKey, xboxRaise)
 		contextActionService:BindAction("Lower", lowerFloor, false, lowerKey, xboxLower)
@@ -511,21 +511,21 @@ end
 local function createHapticFeedback()
 	local isVibrationSupported = hapticService:IsVibrationSupported(Enum.UserInputType.Gamepad1)
 	local largeSupported
-	
+
 	if isVibrationSupported then
 		largeSupported = hapticService:IsMotorSupported(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large)
-		
+
 		if largeSupported then
 			hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large, vibrateAmount)
-			
+
 			wait(0.2)	
-			
+
 			hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large, 0)
 		else
 			hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Small, vibrateAmount)
-			
+
 			wait(0.2)
-			
+
 			hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Small, 0)
 		end	
 	end
@@ -565,7 +565,7 @@ local function updateAttributes()
 	soundID = script:GetAttribute("SoundID")
 	hapticFeedback = script:GetAttribute("HapticFeedback")
 	vibrateAmount = script:GetAttribute("HapticVibrationAmount")
-	
+
 	if not interpolation then
 		speed = 1
 	else
@@ -580,14 +580,14 @@ local function roundInts()
 	script:SetAttribute("RotationStep", round(script:GetAttribute("RotationStep")))
 	script:SetAttribute("GridTextureScale", round(script:GetAttribute("GridTextureScale")))
 	script:SetAttribute("MaxRange", round(script:GetAttribute("MaxRange")))
-	
+
 	updateAttributes()
 end
 
 local function PLACEMENT(func, callback)
 	if currentState ~= 3 and currentState ~= 4 and currentState ~= 5 and object then
 		local cf
-		
+
 		-- Makes sure you have waited the cooldown period before placing
 		if coolDown(player, placementCooldown) then
 			-- Buildmode placement is when you can place multiple objects in one session
@@ -600,7 +600,7 @@ local function PLACEMENT(func, callback)
 					setCurrentState(2)
 
 					func:InvokeServer(object.Name, placedObjects, loc, cf, collisions, plot)
-					
+
 					if callback then
 						xpcall(function()
 							callback()
@@ -608,10 +608,10 @@ local function PLACEMENT(func, callback)
 							warn(errorMessage .. "\n\n" .. err)
 						end)
 					end
-					
+
 					setCurrentState(1)
 					playAudio()
-						
+
 					if hapticFeedback and guiService:IsTenFootInterface() then
 						createHapticFeedback()
 					end
@@ -626,7 +626,7 @@ local function PLACEMENT(func, callback)
 					if func:InvokeServer(object.Name, placedObjects, loc, cf, collisions, plot) then
 						TERMINATE_PLACEMENT()
 						playAudio()
-						
+
 						if callback then
 							xpcall(function()
 								callback()
@@ -634,7 +634,7 @@ local function PLACEMENT(func, callback)
 								warn(errorMessage .. "\n\n" .. err)
 							end)
 						end
-						
+
 						if hapticFeedback and guiService:IsTenFootInterface() then
 							createHapticFeedback()
 						end
@@ -707,7 +707,7 @@ function placement:pauseCurrentState()
 
 	if object then
 		currentState = 4
-		
+
 		print("Set state to: " .. states[currentState])
 	end
 end
@@ -733,7 +733,7 @@ function placement:haltPlacement()
 end
 
 function placement:editAttribute(attribute, input)
-	if script:GetAttribute(attribute) then
+	if script:GetAttribute(attribute) ~= nil then
 		script:SetAttribute(attribute, input)
 		roundInts()
 		updateAttributes()
@@ -787,15 +787,15 @@ function placement:activate(id, pobj, plt, stk, r, a)
 	if includeSelectionBox then	
 		displaySelectionBox()
 	end
-	
+
 	if audibleFeedback then
 		createAudioFeedback()
 	end
-	
+
 	if displayGridTexture then
 		displayGrid()
 	end
-	
+
 	object.PrimaryPart.Transparency = hitboxTransparency
 
 	stackable = stk
