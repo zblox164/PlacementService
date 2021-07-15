@@ -51,7 +51,8 @@ local button = buttonLocation
 itemPlacement.new(
 	2,
 	game.ReplicatedStorage.location,
-	Enum.KeyCode.R, Enum.KeyCode.X, Enum.KeyCode.U, Enum.KeyCode.L
+	Enum.KeyCode.R, Enum.KeyCode.X, Enum.KeyCode.U, Enum.KeyCode.L,
+	Enum.KeyCode.ButtonB, Enum.KeyCode.ButtonA, Enum.KeyCode.ButtonX, Enum.KeyCode.ButtonY
 )
 
 button.MouseButton1Click:Connect(function()
@@ -122,7 +123,7 @@ end
 local function place(plr, name, location, prefabs, cframe, c, plot)
 	local item = prefabs:FindFirstChild(name):Clone()
 	item.PrimaryPart.CanCollide = false
-	item:SetPrimaryPartCFrame(cframe)
+	item:PivotTo(cframe)
 	
 	if checkBoundaries(plot, item.PrimaryPart) then
 		return
