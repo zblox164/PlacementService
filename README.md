@@ -13,13 +13,13 @@ Zblox's Placement module V3 is a feature packed script that handles all the esse
 - Auto place system
 - Collisions
 - Cool down timer for placement
-- Haptic feedback (XBOX)
-- Grid fade in/out toggles
 - Cross platform support for PC and XBOX
 - Custom callback functions on placement
 - Customizable colors when placing and colliding
 - Custom keybinds for cancelling placement, change floor and rotation
 - Custom Range for models to be placed in. Where if the model is too far away from the character you cant place it
+- Haptic feedback (XBOX)
+- Grid fade in/out toggles
 - Floors system (able to raise and lower the object)
 - Interpolation (smoothing)
 - Optional audible feedback
