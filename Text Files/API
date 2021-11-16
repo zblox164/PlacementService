@@ -2,36 +2,56 @@
 
 API:
 
-table MODULE.new(
+FUNCTIONS
+
+placementInfo MODULE.new(
 	int grid,
 	obj objectLocation,
 	Enum rotateInput, Enum terminateInput, Enum raiseInput, Enum lowerInput,
 	Enum xboxRotateInput, Enum xboxTerminateInput, Enum xboxRaisInpute, Enum xboxLowerInput
 )
 							
-void placementFunctions:terminate()
+void placementInfo:terminate()
 Terminates the current placement (if placement is active)
 
-void placementFunctions:activate(string objectName, obj location where the model will be placed, obj plane/plot, bool stackable, bool smart rotation, bool autoPlace)
+void placementInfo:activate(string objectName, obj location where the model will be placed, obj plane/plot, bool stackable, bool smart rotation, bool autoPlace)
 Activates placement
 
-void placementFunctions:requestPlacement(Instance RemoteFunction, function callback)
+void placementInfo:noPlotActivate(string objectName, obj location where the model will be placed, bool smart rotation, bool autoPlace)
+Activates a non plot dependant placement
+
+void placementInfo:requestPlacement(Instance RemoteFunction, function callback)
 Requests a server sided placement. Callback is not required
 
-void placement:haltPlacement() - Stops automatic placement (autoPlace must be true)
+void placementInfo:haltPlacement() - Stops automatic placement (autoPlace must be true)
 Freezes the current placement if autoPlace is set to true
 
-string placement:getCurrentState()
+string placementInfo:getCurrentState()
 Returns the current state of placement
 
-void placement:pauseCurrentState()
+void placementInfo:pauseCurrentState()
 Pauses the current state of placement
 
-void placement:resume()
+void placementInfo:resume()
 Resumes the current state of placement
 
-void placement:editAttribute(string attributeName, var input)
+void placementInfo:editAttribute(string attributeName, var input)
 Edits the inputted attribute (if avaliable) value with the input value
+
+EVENTS
+
+void placementInfo.Activated
+
+void placementInfo.Placed
+
+void placementInfo.Rotated
+
+void placementInfo.Terminated
+
+obj placementInfo.Collided
+
+bool placementInfo.ChangedFloors
+
 
 CODE:
 
@@ -48,7 +68,7 @@ local plot = plotLocation
 
 local button = buttonLocation
 
-itemPlacement.new(
+local placementInfo = itemPlacement.new(
 	2,
 	game.ReplicatedStorage.location,
 	Enum.KeyCode.R, Enum.KeyCode.X, Enum.KeyCode.U, Enum.KeyCode.L,
@@ -76,26 +96,26 @@ end)
 
 local replicatedStorage = game:GetService("ReplicatedStorage")
 
---Ignore the top three functions
+-- Ignore the top three functions
 
 -- Credit EgoMoose
 local function checkHitbox(character, object)
 	if object then
 		local collided = false
-		
+
 		local collisionPoint = object.PrimaryPart.Touched:Connect(function() end)
 		local collisionPoints = object.PrimaryPart:GetTouchingParts()
-		
+
 		for i = 1, #collisionPoints do
 			if not collisionPoints[i]:IsDescendantOf(object) and not collisionPoints[i]:IsDescendantOf(character) then
 				collided = true
-				
+
 				break
 			end
 		end
-		
+
 		collisionPoint:Disconnect()
-		
+
 		return collided
 	end
 end
@@ -103,19 +123,37 @@ end
 local function checkBoundaries(plot, primary)
 	local lowerXBound
 	local upperXBound
-	
+
 	local lowerZBound
 	local upperZBound
-	
+
 	local currentPos = primary.Position
-	
+
 	lowerXBound = plot.Position.X - (plot.Size.X*0.5) 
 	upperXBound = plot.Position.X + (plot.Size.X*0.5)
-	
+
 	lowerZBound = plot.Position.Z - (plot.Size.Z*0.5)	
 	upperZBound = plot.Position.Z + (plot.Size.Z*0.5)
-	
+
 	return currentPos.X > upperXBound or currentPos.X < lowerXBound or currentPos.Z > upperZBound or currentPos.Z < lowerZBound
+end
+
+local function handleCollisions(char, item, c)
+	if c then
+		if not checkHitbox(char, item) then
+			item.PrimaryPart.Transparency = 1
+
+			return true
+		else
+			item:Destroy()
+
+			return false
+		end
+	else
+		item.PrimaryPart.Transparency = 1
+
+		return true
+	end
 end
 
 --Ignore above
@@ -125,30 +163,20 @@ local function place(plr, name, location, prefabs, cframe, c, plot)
 	item.PrimaryPart.CanCollide = false
 	item:PivotTo(cframe)
 	
-	if checkBoundaries(plot, item.PrimaryPart) then
-		return
-	end
-	
-	item.Parent = location
-	
-	if c then
-		if not checkHitbox(plr.Character, item) then	
-			item.PrimaryPart.Transparency = 1
-			
-			return true
-		else
-			item:Destroy()
-			
-			return false
+	if plot then
+		if checkBoundaries(plot, item.PrimaryPart) then
+			return
 		end
+
+		item.Parent = location
+
+		return handleCollisions(plr.Character, item, c)
 	else
-		item.PrimaryPart.Transparency = 1
-			
-		return true
+		return handleCollisions(plr.Character, item, c)
 	end
 end
 
-replicatedStorage.location.REMOTE_NAME.OnServerInvoke = place
+replicatedStorage.REMOTE_FUNCTION_LOCATION.OnServerInvoke = place
 
 ]]
 
