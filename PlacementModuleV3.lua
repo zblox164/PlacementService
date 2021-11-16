@@ -1,9 +1,11 @@
+--!nonstrict
+
 --[[
 
-Current Version - V1.41
-Written by zblox164. Initial release (V1.0) on 2020-05-22
+Current Version - V1.5.0
+Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
-As of version 1.40, the changelogs have been removed from the module.	
+As of version 1.4.0, the changelogs have been removed from the module.	
 For API, open the 'API' script. For Changelogs, open 'Changelogs'.
 For FAQ and extra info, open the 'Extras' script.
 
@@ -30,6 +32,7 @@ local includeSelectionBox = script:GetAttribute("IncludeSelectionBox") -- Toggle
 local gridFadeIn = script:GetAttribute("GridFadeIn") -- If you want the grid to fade in when activating placement
 local gridFadeOut = script:GetAttribute("GridFadeOut") -- If you want the grid to fade out when ending placement
 local audibleFeedback = script:GetAttribute("AudibleFeedback") -- Toggles sound feedback on placement
+local preferSignals = script:GetAttribute("PreferSignals") -- Controls if you want to use signals or callbacks
 
 -- Color3
 local collisionColor = script:GetAttribute("CollisionColor3") -- Color of the hitbox when colliding
@@ -69,6 +72,7 @@ local guiService = game:GetService("GuiService")
 
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
+local camera = workspace.CurrentCamera
 local mouse = player:GetMouse()	
 
 -- math/cframe functions
@@ -92,21 +96,21 @@ local states = {
 	"out-of-range"
 }
 
-local currentState = 4
-local lastState = 4
+local currentState : number = 4
+local lastState : number = 4
 
 -- Constructor variables
-local GRID_UNIT
-local itemLocation
-local rotateKey
-local terminateKey
-local raiseKey
-local lowerKey
-local autoPlace
-local xboxRotate
-local xboxTerminate
-local xboxRaise
-local xboxLower
+local GRID_UNIT : number
+local itemLocation : Model | Folder | Configuration
+local rotateKey : Enum.KeyCode
+local terminateKey : Enum.KeyCode
+local raiseKey : Enum.KeyCode
+local lowerKey : Enum.KeyCode
+local autoPlace : Enum.KeyCode
+local xboxRotate : Enum.KeyCode
+local xboxTerminate : Enum.KeyCode
+local xboxRaise : Enum.KeyCode
+local xboxLower : Enum.KeyCode
 
 -- Activation variables
 local plot
@@ -115,6 +119,8 @@ local object
 -- bools
 local canActivate = true
 local currentRot = false
+local removePlotDependencies
+
 local running = false
 local canPlace
 local stackable
@@ -138,7 +144,7 @@ local UPPER_X_BOUND
 local LOWER_Z_BOUND
 local UPPER_Z_BOUND
 
-local initialY
+local initialY : number
 
 -- collision variables
 local collisionPoints
@@ -147,12 +153,21 @@ local collisionPoint
 -- other
 local placedObjects
 local loc
-local primary
+local primary : Part
 local selection
 local audio
 local lastPlacement = {}
-local errorMessage = "You have improperly setup your callback function. Please input a valid callback"
-local humanoid = character:WaitForChild("Humanoid")
+local errorMessage = "Error code 301: You have improperly setup your callback function. Please input a valid callback"
+local humanoid : Humanoid = character:WaitForChild("Humanoid")
+
+-- signals
+local placed : BindableEvent
+local collided : BindableEvent
+local outOfRange : BindableEvent
+local rotated : BindableEvent
+local terminated : BindableEvent
+local changeFloors : BindableEvent
+local activated : BindableEvent
 
 -- Sets the current state depending on input of function
 local function setCurrentState(state)
@@ -201,6 +216,10 @@ local function checkHitbox()
 		for i = 1, #collisionPoints do
 			if not collisionPoints[i]:IsDescendantOf(object) and not collisionPoints[i]:IsDescendantOf(character) then
 				setCurrentState(3)
+				
+				if preferSignals then
+					collided:Fire(collisionPoints[i])
+				end
 
 				break
 			end
@@ -216,7 +235,11 @@ end
 local function raiseFloor(actionName, inputState, inputObj)
 	if currentState ~= 4 and inputState == Enum.UserInputState.Begin then
 		if enableFloors and not stackable then
-			y = y + floor(abs(floorStep))
+			y += floor(abs(floorStep))
+			
+			if preferSignals then
+				changeFloors:Fire(true)
+			end
 		end
 	end
 end
@@ -224,7 +247,11 @@ end
 local function lowerFloor(actionName, inputState, inputObj)
 	if currentState ~= 4 and inputState == Enum.UserInputState.Begin then
 		if enableFloors and not stackable then
-			y = y - floor(abs(floorStep))
+			y -= floor(abs(floorStep))
+			
+			if preferSignals then
+				changeFloors:Fire(false)
+			end
 		end
 	end
 end
@@ -255,18 +282,17 @@ local function displayGrid()
 	end
 
 	if gridFadeIn then
-		spawn(function()
+		coroutine.resume(coroutine.create(function()
 			for i = 1, 0, -0.1 do
-				if currentState ~= 4 then
-					gridTex.Transparency = i
+				gridTex.Transparency = i
 
-					wait()
-				end
+				wait()
 			end
-		end)
+		end))
 	else
 		gridTex.Transparency = 0
 	end
+
 	gridTex.Parent = plot
 end
 
@@ -310,16 +336,20 @@ local function rotate(actionName, inputState, inputObj)
 
 		-- Toggles currentRot
 		currentRot = not currentRot
+		
+		if preferSignals then
+			rotated:Fire()
+		end
 	end
 end
 
 -- Calculates the Y position to be ontop of the plot (all objects) and any object (when stacking)
-local function calculateYPos(tp, ts, o)
+local function calculateYPos(tp, ts, o) : number
 	return (tp + ts*0.5) + o*0.5
 end
 
 -- Clamps the x and z positions so they cannot leave the plot
-local function bounds(c)
+local function bounds(c) : CFrame
 	-- currentRot is here because if we rotate the model the offset is changed
 	if currentRot then
 		LOWER_X_BOUND = plot.Position.X - (plot.Size.X*0.5) + cx
@@ -339,11 +369,11 @@ local function bounds(c)
 	local newZ = clamp(c.Z, LOWER_Z_BOUND, UPPER_Z_BOUND)
 	local newCFrame = cframe(newX, y, newZ)
 
-	return newCFrame*anglesXYZ(0, rot*pi/180, 0)
+	return newCFrame
 end
 
 -- Returns a rounded cframe to the nearest grid unit
-local function snapCFrame(c)
+local function snapCFrame(c) : CFrame
 	local newX = round(c.X/GRID_UNIT)*GRID_UNIT
 	local newZ = round(c.Z/GRID_UNIT)*GRID_UNIT
 	local newCFrame = cframe(newX, 0, newZ)
@@ -382,10 +412,14 @@ local function calculateItemLocation()
 	else
 		finalC = cframe(x, y, z)*cframe(cx, 0, cz)
 	end
+	
+	if not removePlotDependencies then
+		finalC = bounds(finalC)
+	else
+		finalC = cframe(finalC.X, y, finalC.Z)
+	end
 
-	finalC = bounds(finalC)
-
-	return finalC	
+	return finalC*anglesXYZ(0, rot*pi/180, 0)	
 end
 
 --[[
@@ -393,7 +427,7 @@ end
 	When interpolating the position is changing. This is the position the object will
 	end up after the lerp is finished.
 ]]
-local function getFinalCFrame()
+local function getFinalCFrame() : CFrame
 	return calculateItemLocation()
 end
 
@@ -402,6 +436,10 @@ local function translateObj()
 	if currentState ~= 2 and currentState ~= 4 then
 		if getRange() > maxRange then
 			setCurrentState(5)
+			
+			if preferSignals then
+				outOfRange:Fire()
+			end
 
 			range = true
 		else
@@ -410,6 +448,12 @@ local function translateObj()
 
 		checkHitbox()
 		editHitboxColor()
+
+		if removePlotDependencies then
+			if mouse.Target then
+				plot = mouse.Target
+			end
+		end
 
 		object:PivotTo(primary.CFrame:Lerp(calculateItemLocation(), speed))
 	end
@@ -446,10 +490,10 @@ local function TERMINATE_PLACEMENT()
 
 		-- removes grid texture from plot
 		if displayGridTexture then
-			for i, v in next, plot:GetChildren() do
-				if v then
-					if v.Name == "GridTexture" and v:IsA("Texture") then
-						if gridFadeOut then
+			for i, v in ipairs(plot:GetChildren()) do
+				if v.Name == "GridTexture" and v:IsA("Texture") then
+					if gridFadeOut then
+						coroutine.resume(coroutine.create(function()
 							for i = v.Transparency, 1, 0.1 do
 								v.Transparency = i
 
@@ -457,10 +501,10 @@ local function TERMINATE_PLACEMENT()
 							end
 
 							v:Destroy()
-						else
-							v:Destroy()
-						end	
-					end
+						end))
+					else
+						v:Destroy()
+					end	
 				end
 			end
 		end
@@ -474,6 +518,10 @@ local function TERMINATE_PLACEMENT()
 		unbindInputs()
 
 		mouse.TargetFilter = nil
+		
+		if preferSignals then
+			terminated:Fire()
+		end
 
 		return
 	end
@@ -491,7 +539,7 @@ local function bindInputs()
 end
 
 -- Makes sure that you cannot place objects too fast.
-local function coolDown(plr, cd)
+local function coolDown(plr, cd) : boolean
 	if lastPlacement[plr.UserId] == nil then
 		lastPlacement[plr.UserId] = tick()
 
@@ -512,23 +560,25 @@ local function createHapticFeedback()
 	local isVibrationSupported = hapticService:IsVibrationSupported(Enum.UserInputType.Gamepad1)
 	local largeSupported
 
-	if isVibrationSupported then
-		largeSupported = hapticService:IsMotorSupported(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large)
+	coroutine.resume(coroutine.create(function()
+		if isVibrationSupported then
+			largeSupported = hapticService:IsMotorSupported(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large)
 
-		if largeSupported then
-			hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large, vibrateAmount)
+			if largeSupported then
+				hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large, vibrateAmount)
 
-			wait(0.2)	
+				wait(0.2)	
 
-			hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large, 0)
-		else
-			hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Small, vibrateAmount)
+				hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large, 0)
+			else
+				hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Small, vibrateAmount)
 
-			wait(0.2)
+				wait(0.2)
 
-			hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Small, 0)
-		end	
-	end
+				hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Small, 0)
+			end	
+		end
+	end))
 end
 
 local function updateAttributes()
@@ -569,7 +619,7 @@ local function updateAttributes()
 	if not interpolation then
 		speed = 1
 	else
-		speed = clamp(abs(tonumber(1 - lerpSpeed)), 0, 0.9)
+		speed = clamp(abs(1 - lerpSpeed), 0, 0.9)
 	end
 end
 
@@ -600,13 +650,9 @@ local function PLACEMENT(func, callback)
 					setCurrentState(2)
 
 					func:InvokeServer(object.Name, placedObjects, loc, cf, collisions, plot)
-
-					if callback then
-						xpcall(function()
-							callback()
-						end, function(err)
-							warn(errorMessage .. "\n\n" .. err)
-						end)
+					
+					if preferSignals then
+						placed:Fire()
 					end
 
 					setCurrentState(1)
@@ -626,13 +672,9 @@ local function PLACEMENT(func, callback)
 					if func:InvokeServer(object.Name, placedObjects, loc, cf, collisions, plot) then
 						TERMINATE_PLACEMENT()
 						playAudio()
-
-						if callback then
-							xpcall(function()
-								callback()
-							end, function(err)
-								warn(errorMessage .. "\n\n" .. err)
-							end)
+						
+						if preferSignals then
+							placed:Fire()
 						end
 
 						if hapticFeedback and guiService:IsTenFootInterface() then
@@ -646,12 +688,8 @@ local function PLACEMENT(func, callback)
 end
 
 -- Verifys that the plane which the object is going to be placed upon is the correct size
-local function verifyPlane()	
-	if plot.Size.X%GRID_UNIT == 0 and plot.Size.Z%GRID_UNIT == 0 then
-		return true
-	else
-		return false
-	end
+local function verifyPlane() : boolean
+	return plot.Size.X%GRID_UNIT == 0 and plot.Size.Z%GRID_UNIT == 0
 end
 
 -- Checks if there are any problems with the users setup
@@ -660,18 +698,18 @@ local function approveActivation()
 		warn("The object that the model is moving on is not scaled correctly. Consider changing it.")
 	end
 
-	if GRID_UNIT > min(plot.Size.X, plot.Size.Z) then 
-		error("Grid size is larger than the plot size. To fix this, try lowering the grid size.")
+	if GRID_UNIT >= min(plot.Size.X, plot.Size.Z) then 
+		error("Error code 401: Grid size is too close to the plot size. To fix this, try lowering the grid size.")
 	end
 end
 
 -- Constructor function
 function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
-	local data = {}
-	local metaData = setmetatable(data, placement)
+	local placementInfo = {}
+	setmetatable(placementInfo, placement)
 
 	-- Sets variables needed
-	GRID_UNIT = abs(round(tonumber(g)))
+	GRID_UNIT = abs(round(g))
 	itemLocation = objs
 	rotateKey = r
 	terminateKey = t
@@ -682,22 +720,39 @@ function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
 	xboxRaise = xbu
 	xboxLower = xbl
 
-	data.gridsize = GRID_UNIT
-	data.items = objs
-	data.rotate = rotateKey
-	data.cancel = terminateKey
-	data.raise = raiseKey
-	data.lower = lowerKey
-	data.XBOX_ROTATE = xboxRotate
-	data.XBOX_TERMINATE = xboxTerminate
-	data.XBOX_RAISE = xboxRaise
-	data.XBOX_LOWER = xboxLower
+	placementInfo.gridsize = GRID_UNIT
+	placementInfo.items = objs
+	placementInfo.rotate = rotateKey
+	placementInfo.cancel = terminateKey
+	placementInfo.raise = raiseKey
+	placementInfo.lower = lowerKey
+	placementInfo.XBOX_ROTATE = xboxRotate
+	placementInfo.XBOX_TERMINATE = xboxTerminate
+	placementInfo.XBOX_RAISE = xboxRaise
+	placementInfo.XBOX_LOWER = xboxLower
+	placementInfo.version = "v1.50"
 
-	return data
+	placed = Instance.new("BindableEvent")
+	collided = Instance.new("BindableEvent")
+	outOfRange = Instance.new("BindableEvent")
+	rotated = Instance.new("BindableEvent")
+	terminated = Instance.new("BindableEvent")
+	changeFloors = Instance.new("BindableEvent")
+	activated = Instance.new("BindableEvent")
+
+	placementInfo.Placed = placed.Event
+	placementInfo.Collided = collided.Event
+	placementInfo.OutOfRange = outOfRange.Event
+	placementInfo.Rotated = rotated.Event
+	placementInfo.Terminated = terminated.Event
+	placementInfo.ChangedFloors = changeFloors.Event
+	placementInfo.Activated = activated.Event
+
+	return placementInfo
 end
 
 -- returns the current state when called
-function placement:getCurrentState()
+function placement:getCurrentState() : string
 	return states[currentState]
 end
 
@@ -743,27 +798,136 @@ function placement:editAttribute(attribute, input)
 end
 
 -- Requests to place down the object
-function placement:requestPlacement(func, cb) 
+function placement:requestPlacement(func) 
 	if autoPlace then
 		running = true
 
 		repeat
-			PLACEMENT(func, cb)
+			PLACEMENT(func)
 
 			wait(placementCooldown)
 		until not running
 	else
-		PLACEMENT(func, cb)
+		PLACEMENT(func)
 	end
 end
 
 -- Activates placement
 function placement:activate(id, pobj, plt, stk, r, a)
-	TERMINATE_PLACEMENT()
+	if currentState ~= 4 then
+		TERMINATE_PLACEMENT()
+	end
+
 	character = player.Character or player.CharacterAdded:Wait()
 
 	-- Sets necessary variables for placement 
 	plot = plt
+	object = itemLocation:FindFirstChild(tostring(id)):Clone()
+	placedObjects = pobj
+	loc = itemLocation
+
+	approveActivation()
+
+	-- Sets properties of the model (CanCollide, Transparency)
+	for i, o in pairs(object:GetDescendants()) do
+		if o then
+			if o:IsA("Part") or o:IsA("UnionOperation") or o:IsA("MeshPart") then
+				o.CanCollide = false
+				o.Anchored = true
+
+				if transparentModel then
+					o.Transparency = o.Transparency + transparencyDelta
+				end
+			end
+		end
+	end
+
+	if displayGridTexture then
+		displayGrid()
+	end
+
+	if includeSelectionBox then	
+		displaySelectionBox()
+	end
+
+	if audibleFeedback then
+		createAudioFeedback()
+	end
+
+	object.PrimaryPart.Transparency = hitboxTransparency
+	stackable = stk
+	smartRot = r
+
+	-- Allows stackable objects depending on stk variable given by the user
+	if not stk then
+		mouse.TargetFilter = placedObjects
+	else
+		mouse.TargetFilter = object
+	end
+
+	-- Toggles buildmode placement (infinite placement) depending on if set true by the user
+	if buildModePlacement then
+		canActivate = true
+	else
+		canActivate = false
+	end
+
+	-- Gets the initial y pos and gives it to y
+	initialY = calculateYPos(plt.Position.Y, plt.Size.Y, object.PrimaryPart.Size.Y)
+	y = initialY
+	speed = 0
+	rot = 0
+	currentRot = true
+	removePlotDependencies = false
+	autoPlace = a
+
+	translateObj()
+	editHitboxColor()
+	bindInputs()
+	roundInts()
+
+	-- Sets up interpolation speed
+	speed = 1
+
+	if interpolation then
+		preSpeed = clamp(abs(tonumber(1 - lerpSpeed)), 0, 0.9)
+
+		if instantActivation then
+			speed = 1
+		else
+			speed = preSpeed
+		end
+	end
+
+	-- Parents the object to the location given
+	if object then
+		primary = object.PrimaryPart
+		setCurrentState(1)
+		object.Parent = pobj
+
+		wait()
+
+		speed = preSpeed
+	else
+		TERMINATE_PLACEMENT()
+
+		warn("Your trying to activate placement too fast! Please slow down")
+	end
+	
+	if preferSignals then
+		activated:Fire()
+	end
+end
+
+function placement:noPlotActivate(id, pobj, r, a)
+	if currentState ~= 4 then
+		TERMINATE_PLACEMENT()
+	end
+
+	character = player.Character or player.CharacterAdded:Wait()
+
+	-- Sets necessary variables for placement 
+	plot = mouse.Target
 	object = itemLocation:FindFirstChild(tostring(id)):Clone()
 	placedObjects = pobj
 	loc = itemLocation
@@ -792,21 +956,11 @@ function placement:activate(id, pobj, plt, stk, r, a)
 		createAudioFeedback()
 	end
 
-	if displayGridTexture then
-		displayGrid()
-	end
-
 	object.PrimaryPart.Transparency = hitboxTransparency
-
-	stackable = stk
+	stackable = true
 	smartRot = r
-
-	-- Allows stackable objects depending on stk variable given by the user
-	if not stk then
-		mouse.TargetFilter = placedObjects
-	else
-		mouse.TargetFilter = object
-	end
+	mouse.TargetFilter = object
+	removePlotDependencies = true
 
 	-- Toggles buildmode placement (infinite placement) depending on if set true by the user
 	if buildModePlacement then
@@ -816,9 +970,8 @@ function placement:activate(id, pobj, plt, stk, r, a)
 	end
 
 	-- Gets the initial y pos and gives it to y
-	initialY = calculateYPos(plt.Position.Y, plt.Size.Y, object.PrimaryPart.Size.Y)
+	initialY = calculateYPos(plot.Position.Y, plot.Size.Y, object.PrimaryPart.Size.Y)
 	y = initialY
-
 	speed = 0
 	rot = 0
 	currentRot = true
@@ -855,6 +1008,10 @@ function placement:activate(id, pobj, plt, stk, r, a)
 		TERMINATE_PLACEMENT()
 
 		warn("Your trying to activate placement too fast! Please slow down")
+	end
+	
+	if preferSignals then
+		activated:Fire()
 	end
 end
 
