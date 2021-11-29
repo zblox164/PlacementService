@@ -2,7 +2,7 @@
 
 --[[
 
-Current Version - V1.5.0
+Current Version - V1.5.1
 Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
 As of version 1.4.0, the changelogs have been removed from the module.	
@@ -653,6 +653,12 @@ local function PLACEMENT(func, callback)
 					
 					if preferSignals then
 						placed:Fire()
+					else
+						xpcall(function()
+							callback()
+						end, function(err)
+							warn(errorMessage .. "\n\n" .. err)
+						end)
 					end
 
 					setCurrentState(1)
@@ -675,6 +681,12 @@ local function PLACEMENT(func, callback)
 						
 						if preferSignals then
 							placed:Fire()
+						else
+							xpcall(function()
+								callback()
+							end, function(err)
+								warn(errorMessage .. "\n\n" .. err)
+							end)
 						end
 
 						if hapticFeedback and guiService:IsTenFootInterface() then
@@ -730,7 +742,7 @@ function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
 	placementInfo.XBOX_TERMINATE = xboxTerminate
 	placementInfo.XBOX_RAISE = xboxRaise
 	placementInfo.XBOX_LOWER = xboxLower
-	placementInfo.version = "v1.50"
+	placementInfo.version = "v1.5.1"
 
 	placed = Instance.new("BindableEvent")
 	collided = Instance.new("BindableEvent")
