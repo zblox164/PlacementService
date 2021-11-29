@@ -1,6 +1,6 @@
 --[[
 
-Current Version - V1.5.0
+Current Version - V1.5.1
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -85,6 +85,11 @@ Change log:
 	  Note that there is only one callback (on placement) and this disables signals.
 	- Added new non plot dependent placement.
 	- Minor Improvements
+2021-11-28 V1.5.1 - Details:
+	Module changes
+	- Fixed callbacks not being in the previous version even when PreferSignals is set to false.
+	Other changes
+	- Fixed typos for version numbers
 ]]
 
 -- Created and written by zblox164
