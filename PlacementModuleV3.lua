@@ -2,7 +2,7 @@
 
 --[[
 
-Current Version - V1.5.1
+Current Version - V1.5.2
 Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
 As of version 1.4.0, the changelogs have been removed from the module.	
@@ -67,6 +67,7 @@ local vibrateAmount = script:GetAttribute("HapticVibrationAmount") -- How large 
 -- Essentials
 local runService = game:GetService("RunService")
 local contextActionService = game:GetService("ContextActionService")
+local userInputService = game:GetService("UserInputService")
 local hapticService = game:GetService("HapticService")
 local guiService = game:GetService("GuiService")
 
@@ -118,6 +119,8 @@ local object
 
 -- bools
 local canActivate = true
+local isMobile = false
+local isXbox = false
 local currentRot = false
 local removePlotDependencies
 
@@ -159,6 +162,9 @@ local audio
 local lastPlacement = {}
 local errorMessage = "Error code 301: You have improperly setup your callback function. Please input a valid callback"
 local humanoid : Humanoid = character:WaitForChild("Humanoid")
+local raycastParams = RaycastParams.new()
+local mobileUI = script.MobileUI
+local target
 
 -- signals
 local placed : BindableEvent
@@ -321,7 +327,7 @@ local function playAudio()
 end
 
 -- Handles rotation of the model
-local function rotate(actionName, inputState, inputObj)
+local function ROTATE(actionName, inputState, inputObj)
 	if currentState ~= 4 and currentState ~= 2 and inputState == Enum.UserInputState.Begin then
 		if smartRot then
 			-- Rotates the model depending on if currentRot is true/false
@@ -386,21 +392,46 @@ local function calculateItemLocation()
 	if currentRot then
 		cx = primary.Size.X*0.5
 		cz = primary.Size.Z*0.5
-
-		x, z = mouse.Hit.X - cx, mouse.Hit.Z - cz
+		
+		if not isMobile then
+			x, z = mouse.Hit.X - cx, mouse.Hit.Z - cz
+			target = mouse.Target
+		else
+			local cam = workspace.CurrentCamera
+			local camPos = cam.CFrame.Position
+			local ray = workspace:Raycast(camPos, cam.CFrame.LookVector*maxRange, raycastParams)
+			
+			if ray then
+				x, z = ray.Position.X - cx, ray.Position.Z - cz
+				target = ray.Instance
+			end
+		end
 	else
 		cx = primary.Size.Z*0.5
 		cz = primary.Size.X*0.5
-
-		x, z = mouse.Hit.X - cx, mouse.Hit.Z - cz
+		
+		if not isMobile then
+			x, z = mouse.Hit.X - cx, mouse.Hit.Z - cz
+			target = mouse.Target
+		else
+			local cam = workspace.CurrentCamera
+			local camPos = cam.CFrame.Position
+			local ray = workspace:Raycast(camPos, cam.CFrame.LookVector*maxRange, raycastParams)
+			
+			if ray then
+				x, z = ray.Position.X - cx, ray.Position.Z - cz
+				target = ray.Instance
+			end
+		end
 	end
 
 	-- Clamps y to a max height above the plot position
 	y = clamp(y, initialY, maxHeight + initialY)
-
+	
 	-- Changes y depending on mouse target
-	if stackable and mouse.Target and mouse.Target:IsDescendantOf(placedObjects) or mouse.Target == plot then
-		y = calculateYPos(mouse.Target.Position.Y, mouse.Target.Size.Y, primary.Size.Y)
+	if stackable and target and (target:IsDescendantOf(placedObjects) or target == plot) then
+		y = calculateYPos(target.Position.Y, target.Size.Y, primary.Size.Y)
+		print(stackable)
 	end
 
 	if moveByGrid then
@@ -475,6 +506,8 @@ end
 local function TERMINATE_PLACEMENT()
 	if object then
 		setCurrentState(4)
+		
+		mobileUI.Parent = script
 
 		if selection then
 			selection:Destroy()
@@ -529,7 +562,7 @@ end
 
 -- Binds all inputs for PC and Xbox
 local function bindInputs()
-	contextActionService:BindAction("Rotate", rotate, false, rotateKey, xboxRotate)
+	contextActionService:BindAction("Rotate", ROTATE, false, rotateKey, xboxRotate)
 	contextActionService:BindAction("Terminate", TERMINATE_PLACEMENT, false, terminateKey, xboxTerminate)
 
 	if enableFloors and not stackable then
@@ -699,6 +732,19 @@ local function PLACEMENT(func, callback)
 	end
 end
 
+local function GET_PLATFORM() : string
+	isXbox = userInputService.GamepadEnabled
+	isMobile = userInputService.TouchEnabled
+
+	if isMobile then
+		return "Mobile"
+	elseif isXbox then
+		return "Console"
+	else
+		return "PC"
+	end
+end
+
 -- Verifys that the plane which the object is going to be placed upon is the correct size
 local function verifyPlane() : boolean
 	return plot.Size.X%GRID_UNIT == 0 and plot.Size.Z%GRID_UNIT == 0
@@ -734,15 +780,16 @@ function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
 
 	placementInfo.gridsize = GRID_UNIT
 	placementInfo.items = objs
-	placementInfo.rotate = rotateKey
-	placementInfo.cancel = terminateKey
-	placementInfo.raise = raiseKey
-	placementInfo.lower = lowerKey
+	placementInfo.ROTATE_KEY = rotateKey
+	placementInfo.CANCEL_KEY = terminateKey
+	placementInfo.RAISE_KEY = raiseKey
+	placementInfo.LOWER_KEY = lowerKey
 	placementInfo.XBOX_ROTATE = xboxRotate
 	placementInfo.XBOX_TERMINATE = xboxTerminate
 	placementInfo.XBOX_RAISE = xboxRaise
 	placementInfo.XBOX_LOWER = xboxLower
-	placementInfo.version = "v1.5.1"
+	placementInfo.version = "v1.5.2"
+	placementInfo.MobileUI = script.MobileUI
 
 	placed = Instance.new("BindableEvent")
 	collided = Instance.new("BindableEvent")
@@ -761,6 +808,10 @@ function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
 	placementInfo.Activated = activated.Event
 
 	return placementInfo
+end
+
+function placement:getPlatform() : string
+	return GET_PLATFORM()
 end
 
 -- returns the current state when called
@@ -786,7 +837,18 @@ function placement:resume()
 	end
 end
 
--- Terminates placement
+function placement:raise()
+	raiseFloor("Raise", Enum.UserInputState.Begin)
+end
+
+function placement:lower()
+	lowerFloor("Lower", Enum.UserInputState.Begin)
+end
+
+function placement:rotate()
+	ROTATE("Rotate", Enum.UserInputState.Begin)
+end
+
 function placement:terminate()
 	TERMINATE_PLACEMENT()
 end
@@ -826,6 +888,10 @@ end
 
 -- Activates placement
 function placement:activate(id, pobj, plt, stk, r, a)
+	if GET_PLATFORM() == "Mobile" then
+		mobileUI.Parent = player.PlayerGui
+	end
+	
 	if currentState ~= 4 then
 		TERMINATE_PLACEMENT()
 	end
@@ -873,8 +939,12 @@ function placement:activate(id, pobj, plt, stk, r, a)
 	-- Allows stackable objects depending on stk variable given by the user
 	if not stk then
 		mouse.TargetFilter = placedObjects
+		raycastParams.FilterDescendantsInstances = {placedObjects, character}
+		raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
 	else
 		mouse.TargetFilter = object
+		raycastParams.FilterDescendantsInstances = {object, character}
+		raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
 	end
 
 	-- Toggles buildmode placement (infinite placement) depending on if set true by the user
@@ -932,6 +1002,10 @@ function placement:activate(id, pobj, plt, stk, r, a)
 end
 
 function placement:noPlotActivate(id, pobj, r, a)
+	if GET_PLATFORM() == "Mobile" then
+		mobileUI.Parent = player.PlayerGui
+	end
+	
 	if currentState ~= 4 then
 		TERMINATE_PLACEMENT()
 	end
@@ -973,7 +1047,9 @@ function placement:noPlotActivate(id, pobj, r, a)
 	smartRot = r
 	mouse.TargetFilter = object
 	removePlotDependencies = true
-
+	raycastParams.FilterDescendantsInstances = {placedObjects, character}
+	raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+	
 	-- Toggles buildmode placement (infinite placement) depending on if set true by the user
 	if buildModePlacement then
 		canActivate = true
