@@ -1,6 +1,6 @@
 --[[
 
-Current Version - V1.5.1
+Current Version - V1.5.2
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -90,6 +90,11 @@ Change log:
 	- Fixed callbacks not being in the previous version even when PreferSignals is set to false.
 	Other changes
 	- Fixed typos for version numbers
+2021-12-21 V1.5.2 - Details:
+	Modules changes
+	- Added mobile support.
+	- Added functions for getting the device type, manual rotation, and manual floor changes.
+	- Fixed logic bug when changing floors.
 ]]
 
 -- Created and written by zblox164
