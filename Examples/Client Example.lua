@@ -3,7 +3,7 @@ Written by zblox164
 2021
 ]]
 
--- Assume non defined variables are set
+-- Assume non defined variables are pre defined
 -- Placement module variables
 local placementModule = require(modules:WaitForChild("PlacementModuleV3")) -- Assume this location is valid
 local placementInfo = placementModule.new(
