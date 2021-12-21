@@ -2,6 +2,7 @@
 
 API:
 
+
 FUNCTIONS
 
 placementInfo MODULE.new(
@@ -26,9 +27,6 @@ Requests a server sided placement. Callback is not required
 void placementInfo:haltPlacement() - Stops automatic placement (autoPlace must be true)
 Freezes the current placement if autoPlace is set to true
 
-string placementInfo:getCurrentState()
-Returns the current state of placement
-
 void placementInfo:pauseCurrentState()
 Pauses the current state of placement
 
@@ -37,6 +35,22 @@ Resumes the current state of placement
 
 void placementInfo:editAttribute(string attributeName, var input)
 Edits the inputted attribute (if avaliable) value with the input value
+
+void placementInfo:rotate()
+Manually rotates the object (used for mobile support)
+
+void placementInfo:raise()
+Manually raises the objects "floor" (used for mobile support)
+
+void placementInfo:lower()
+Manually lowers the objects "floor" (used for mobile support)
+
+string placementInfo:getCurrentState()
+Returns the current state of placement
+
+string placementInfo:getPlatform()
+Returns the current platform the user is using
+
 
 EVENTS
 
