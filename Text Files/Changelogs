@@ -1,6 +1,6 @@
 --[[
 
-Current Version - V1.5.2
+Current Version - V1.5.3
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -95,6 +95,13 @@ Change log:
 	- Added mobile support.
 	- Added functions for getting the device type, manual rotation, and manual floor changes.
 	- Fixed logic bug when changing floors.
+2022-02-07 V1.5.3 - Details:
+	Module changes
+	- Minor code improvements
+	- Removed xbox controls dependencies (will now just default to presets)
+	- Removed requirement for mobile ui to be strictly named "MobileUI"
+	- Fixed rotation/bounds bug
+	- Improved error messaging
 ]]
 
--- Created and written by zblox164
+-- Created and written by zblox164 (2020-2022)
