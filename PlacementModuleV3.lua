@@ -2,7 +2,7 @@
 
 --[[
 
-Current Version - V1.5.2
+Current Version - V1.5.3
 Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
 As of version 1.4.0, the changelogs have been removed from the module.	
@@ -133,25 +133,9 @@ local range
 -- values used for calculations
 local speed = 1
 local preSpeed = 1
-
 local y
 local rot
-local x, z
-local cx, cz
-local pos = cframe(0, 0, 0)
-local finalC = cframe(0, 0, 0)
-
-local LOWER_X_BOUND
-local UPPER_X_BOUND
-
-local LOWER_Z_BOUND
-local UPPER_Z_BOUND
-
 local initialY : number
-
--- collision variables
-local collisionPoints
-local collisionPoint
 
 -- other
 local placedObjects
@@ -160,11 +144,16 @@ local primary : Part
 local selection
 local audio
 local lastPlacement = {}
-local errorMessage = "Error code 301: You have improperly setup your callback function. Please input a valid callback"
 local humanoid : Humanoid = character:WaitForChild("Humanoid")
 local raycastParams = RaycastParams.new()
-local mobileUI = script.MobileUI
+local mobileUI = script:FindFirstChildOfClass("ScreenGui")
 local target
+local messages = {
+	["101"] = "Your trying to activate placement too fast! Please slow down",
+	["201"] = "Error code 201: The object that the model is moving on is not scaled correctly. Consider changing it.",
+	["301"] = "Error code 301: You have improperly setup your callback function. Please input a valid callback",
+	["401"] = "Error code 401: Grid size is too close to the plot size. To fix this, try lowering the grid size.",
+}
 
 -- signals
 local placed : BindableEvent
@@ -215,8 +204,8 @@ local function checkHitbox()
 			setCurrentState(1)
 		end
 
-		collisionPoint = object.PrimaryPart.Touched:Connect(function() end)
-		collisionPoints = object.PrimaryPart:GetTouchingParts()
+		local collisionPoint = object.PrimaryPart.Touched:Connect(function() end)
+		local collisionPoints = object.PrimaryPart:GetTouchingParts()
 
 		-- Checks if there is collision on any object that is not a child of the object and is not a child of the player
 		for i = 1, #collisionPoints do
@@ -341,7 +330,9 @@ local function ROTATE(actionName, inputState, inputObj)
 		end
 
 		-- Toggles currentRot
-		currentRot = not currentRot
+		if rot%90 == 0 then
+			currentRot = not currentRot
+		end
 		
 		if preferSignals then
 			rotated:Fire()
@@ -355,22 +346,20 @@ local function calculateYPos(tp, ts, o) : number
 end
 
 -- Clamps the x and z positions so they cannot leave the plot
-local function bounds(c) : CFrame
+local function bounds(c, cx, cz) : CFrame
+	local LOWER_X_BOUND
+	local UPPER_X_BOUND
+
+	local LOWER_Z_BOUND
+	local UPPER_Z_BOUND
+	
 	-- currentRot is here because if we rotate the model the offset is changed
-	if currentRot then
-		LOWER_X_BOUND = plot.Position.X - (plot.Size.X*0.5) + cx
-		UPPER_X_BOUND = plot.Position.X + (plot.Size.X*0.5) - cx
+	LOWER_X_BOUND = plot.Position.X - (plot.Size.X*0.5) + cx
+	UPPER_X_BOUND = plot.Position.X + (plot.Size.X*0.5) - cx
 
-		LOWER_Z_BOUND = plot.Position.Z - (plot.Size.Z*0.5)	+ cz
-		UPPER_Z_BOUND = plot.Position.Z + (plot.Size.Z*0.5) - cz
-	else
-		LOWER_X_BOUND = plot.Position.X - (plot.Size.X*0.5) + cx
-		UPPER_X_BOUND = plot.Position.X + (plot.Size.X*0.5) - cx
-
-		LOWER_Z_BOUND = plot.Position.Z - (plot.Size.Z*0.5)	+ cz
-		UPPER_Z_BOUND = plot.Position.Z + (plot.Size.Z*0.5) - cz
-	end
-
+	LOWER_Z_BOUND = plot.Position.Z - (plot.Size.Z*0.5)	+ cz
+	UPPER_Z_BOUND = plot.Position.Z + (plot.Size.Z*0.5) - cz
+	
 	local newX = clamp(c.X, LOWER_X_BOUND, UPPER_X_BOUND)
 	local newZ = clamp(c.Z, LOWER_Z_BOUND, UPPER_Z_BOUND)
 	local newCFrame = cframe(newX, y, newZ)
@@ -389,6 +378,11 @@ end
 
 -- Calculates the position of the object
 local function calculateItemLocation()
+	local x, z
+	local cx, cz
+	local pos = cframe(0, 0, 0)
+	local finalC = cframe(0, 0, 0)
+	
 	if currentRot then
 		cx = primary.Size.X*0.5
 		cz = primary.Size.Z*0.5
@@ -431,7 +425,6 @@ local function calculateItemLocation()
 	-- Changes y depending on mouse target
 	if stackable and target and (target:IsDescendantOf(placedObjects) or target == plot) then
 		y = calculateYPos(target.Position.Y, target.Size.Y, primary.Size.Y)
-		print(stackable)
 	end
 
 	if moveByGrid then
@@ -445,7 +438,7 @@ local function calculateItemLocation()
 	end
 	
 	if not removePlotDependencies then
-		finalC = bounds(finalC)
+		finalC = bounds(finalC, cx, cz)
 	else
 		finalC = cframe(finalC.X, y, finalC.Z)
 	end
@@ -453,11 +446,7 @@ local function calculateItemLocation()
 	return finalC*anglesXYZ(0, rot*pi/180, 0)	
 end
 
---[[
-	Used for sending a final CFrame to the server when using interpolation.
-	When interpolating the position is changing. This is the position the object will
-	end up after the lerp is finished.
-]]
+-- Used for sending a final CFrame to the server when using interpolation.
 local function getFinalCFrame() : CFrame
 	return calculateItemLocation()
 end
@@ -690,7 +679,7 @@ local function PLACEMENT(func, callback)
 						xpcall(function()
 							callback()
 						end, function(err)
-							warn(errorMessage .. "\n\n" .. err)
+							warn(messages["301"] .. "\n\n" .. err)
 						end)
 					end
 
@@ -718,7 +707,7 @@ local function PLACEMENT(func, callback)
 							xpcall(function()
 								callback()
 							end, function(err)
-								warn(errorMessage .. "\n\n" .. err)
+								warn(messages["301"] .. "\n\n" .. err)
 							end)
 						end
 
@@ -753,11 +742,11 @@ end
 -- Checks if there are any problems with the users setup
 local function approveActivation()
 	if not verifyPlane() then
-		warn("The object that the model is moving on is not scaled correctly. Consider changing it.")
+		warn(messages["201"])
 	end
 
 	if GRID_UNIT >= min(plot.Size.X, plot.Size.Z) then 
-		error("Error code 401: Grid size is too close to the plot size. To fix this, try lowering the grid size.")
+		error(messages["401"])
 	end
 end
 
@@ -784,12 +773,12 @@ function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
 	placementInfo.CANCEL_KEY = terminateKey
 	placementInfo.RAISE_KEY = raiseKey
 	placementInfo.LOWER_KEY = lowerKey
-	placementInfo.XBOX_ROTATE = xboxRotate
-	placementInfo.XBOX_TERMINATE = xboxTerminate
-	placementInfo.XBOX_RAISE = xboxRaise
-	placementInfo.XBOX_LOWER = xboxLower
-	placementInfo.version = "v1.5.2"
-	placementInfo.MobileUI = script.MobileUI
+	placementInfo.XBOX_ROTATE = xboxRotate or Enum.KeyCode.ButtonX
+	placementInfo.XBOX_TERMINATE = xboxTerminate or Enum.KeyCode.ButtonB
+	placementInfo.XBOX_RAISE = xboxRaise or Enum.KeyCode.Y
+	placementInfo.XBOX_LOWER = xboxLower or Enum.KeyCode.A
+	placementInfo.version = "v1.5.3"
+	placementInfo.MobileUI = script:FindFirstChildOfClass("ScreenGui")
 
 	placed = Instance.new("BindableEvent")
 	collided = Instance.new("BindableEvent")
@@ -993,7 +982,7 @@ function placement:activate(id, pobj, plt, stk, r, a)
 	else
 		TERMINATE_PLACEMENT()
 
-		warn("Your trying to activate placement too fast! Please slow down")
+		warn(messages["101"])
 	end
 	
 	if preferSignals then
@@ -1001,6 +990,7 @@ function placement:activate(id, pobj, plt, stk, r, a)
 	end
 end
 
+-- REMOVE THIS FUNCTION IF YOU ARE NOT GOING TO USE IT
 function placement:noPlotActivate(id, pobj, r, a)
 	if GET_PLATFORM() == "Mobile" then
 		mobileUI.Parent = player.PlayerGui
@@ -1095,7 +1085,7 @@ function placement:noPlotActivate(id, pobj, r, a)
 	else
 		TERMINATE_PLACEMENT()
 
-		warn("Your trying to activate placement too fast! Please slow down")
+		warn(messages["101"])
 	end
 	
 	if preferSignals then
@@ -1107,4 +1097,4 @@ runService:BindToRenderStep("Input", Enum.RenderPriority.Input.Value, translateO
 
 return placement
 
--- Created and written by zblox164
+-- Created and written by zblox164 (2020-2022)
