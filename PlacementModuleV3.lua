@@ -2,7 +2,7 @@
 
 --[[
 
-Current Version - V1.5.3
+Current Version - V1.5.4
 Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
 As of version 1.4.0, the changelogs have been removed from the module.	
@@ -353,7 +353,6 @@ local function bounds(c, cx, cz) : CFrame
 	local LOWER_Z_BOUND
 	local UPPER_Z_BOUND
 	
-	-- currentRot is here because if we rotate the model the offset is changed
 	LOWER_X_BOUND = plot.Position.X - (plot.Size.X*0.5) + cx
 	UPPER_X_BOUND = plot.Position.X + (plot.Size.X*0.5) - cx
 
@@ -426,7 +425,7 @@ local function calculateItemLocation()
 	if stackable and target and (target:IsDescendantOf(placedObjects) or target == plot) then
 		y = calculateYPos(target.Position.Y, target.Size.Y, primary.Size.Y)
 	end
-
+	
 	if moveByGrid then
 		-- Calculates the correct position
 		local pltCFrame = cframe(plot.CFrame.X, plot.CFrame.Y, plot.CFrame.Z)
@@ -721,6 +720,7 @@ local function PLACEMENT(func, callback)
 	end
 end
 
+-- Returns the current platform
 local function GET_PLATFORM() : string
 	isXbox = userInputService.GamepadEnabled
 	isMobile = userInputService.TouchEnabled
@@ -769,15 +769,15 @@ function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
 
 	placementInfo.gridsize = GRID_UNIT
 	placementInfo.items = objs
-	placementInfo.ROTATE_KEY = rotateKey
-	placementInfo.CANCEL_KEY = terminateKey
-	placementInfo.RAISE_KEY = raiseKey
-	placementInfo.LOWER_KEY = lowerKey
+	placementInfo.ROTATE_KEY = rotateKey or Enum.KeyCode.R
+	placementInfo.CANCEL_KEY = terminateKey or Enum.KeyCode.X
+	placementInfo.RAISE_KEY = raiseKey or Enum.KeyCode.E
+	placementInfo.LOWER_KEY = lowerKey or Enum.KeyCode.Q
 	placementInfo.XBOX_ROTATE = xboxRotate or Enum.KeyCode.ButtonX
 	placementInfo.XBOX_TERMINATE = xboxTerminate or Enum.KeyCode.ButtonB
-	placementInfo.XBOX_RAISE = xboxRaise or Enum.KeyCode.Y
-	placementInfo.XBOX_LOWER = xboxLower or Enum.KeyCode.A
-	placementInfo.version = "v1.5.3"
+	placementInfo.XBOX_RAISE = xboxRaise or Enum.KeyCode.ButtonY
+	placementInfo.XBOX_LOWER = xboxLower or Enum.KeyCode.ButtonA
+	placementInfo.version = "v1.5.4"
 	placementInfo.MobileUI = script:FindFirstChildOfClass("ScreenGui")
 
 	placed = Instance.new("BindableEvent")
