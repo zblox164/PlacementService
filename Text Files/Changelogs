@@ -1,6 +1,6 @@
 --[[
 
-Current Version - V1.5.3
+Current Version - V1.5.4
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -102,6 +102,10 @@ Change log:
 	- Removed requirement for mobile ui to be strictly named "MobileUI"
 	- Fixed rotation/bounds bug
 	- Improved error messaging
+2022-02-18 V1.5.4 - Details:
+	Module changes
+	- Minor Improvements
+	- Minor Fixes
 ]]
 
 -- Created and written by zblox164 (2020-2022)
