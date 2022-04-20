@@ -2,7 +2,7 @@
 
 --[[
 
-Current Version - V1.5.4
+Current Version - V1.5.5
 Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
 As of version 1.4.0, the changelogs have been removed from the module.	
@@ -149,9 +149,9 @@ local raycastParams = RaycastParams.new()
 local mobileUI = script:FindFirstChildOfClass("ScreenGui")
 local target
 local messages = {
-	["101"] = "Your trying to activate placement too fast! Please slow down",
+	["101"] = "Your trying to activate placement too fast! Please slow down.",
 	["201"] = "Error code 201: The object that the model is moving on is not scaled correctly. Consider changing it.",
-	["301"] = "Error code 301: You have improperly setup your callback function. Please input a valid callback",
+	["301"] = "Error code 301: You have improperly setup your callback function. Please input a valid callback.",
 	["401"] = "Error code 401: Grid size is too close to the plot size. To fix this, try lowering the grid size.",
 }
 
@@ -281,7 +281,7 @@ local function displayGrid()
 			for i = 1, 0, -0.1 do
 				gridTex.Transparency = i
 
-				wait()
+				task.wait(0.01)
 			end
 		end))
 	else
@@ -518,7 +518,7 @@ local function TERMINATE_PLACEMENT()
 							for i = v.Transparency, 1, 0.1 do
 								v.Transparency = i
 
-								wait()
+								task.wait(0.01)
 							end
 
 							v:Destroy()
@@ -588,13 +588,13 @@ local function createHapticFeedback()
 			if largeSupported then
 				hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large, vibrateAmount)
 
-				wait(0.2)	
+				task.wait(0.2)	
 
 				hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Large, 0)
 			else
 				hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Small, vibrateAmount)
 
-				wait(0.2)
+				task.wait(0.2)	
 
 				hapticService:SetMotor(Enum.UserInputType.Gamepad1, Enum.VibrationMotor.Small, 0)
 			end	
@@ -695,7 +695,7 @@ local function PLACEMENT(func, callback)
 				checkHitbox()
 
 				if currentState == 2 or currentState == 1 then
-					-- Same as above (line 540)
+					-- Same as above
 					if func:InvokeServer(object.Name, placedObjects, loc, cf, collisions, plot) then
 						TERMINATE_PLACEMENT()
 						playAudio()
@@ -777,7 +777,7 @@ function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
 	placementInfo.XBOX_TERMINATE = xboxTerminate or Enum.KeyCode.ButtonB
 	placementInfo.XBOX_RAISE = xboxRaise or Enum.KeyCode.ButtonY
 	placementInfo.XBOX_LOWER = xboxLower or Enum.KeyCode.ButtonA
-	placementInfo.version = "v1.5.4"
+	placementInfo.version = "v1.5.5"
 	placementInfo.MobileUI = script:FindFirstChildOfClass("ScreenGui")
 
 	placed = Instance.new("BindableEvent")
@@ -861,17 +861,17 @@ function placement:editAttribute(attribute, input)
 end
 
 -- Requests to place down the object
-function placement:requestPlacement(func) 
+function placement:requestPlacement(func, callback) 
 	if autoPlace then
 		running = true
 
 		repeat
-			PLACEMENT(func)
+			PLACEMENT(func, callback)
 
-			wait(placementCooldown)
+			task.wait(placementCooldown)
 		until not running
 	else
-		PLACEMENT(func)
+		PLACEMENT(func, callback)
 	end
 end
 
@@ -898,7 +898,7 @@ function placement:activate(id, pobj, plt, stk, r, a)
 	-- Sets properties of the model (CanCollide, Transparency)
 	for i, o in pairs(object:GetDescendants()) do
 		if o then
-			if o:IsA("Part") or o:IsA("UnionOperation") or o:IsA("MeshPart") then
+			if o:IsA("BasePart") then
 				o.CanCollide = false
 				o.Anchored = true
 
@@ -976,7 +976,7 @@ function placement:activate(id, pobj, plt, stk, r, a)
 		setCurrentState(1)
 		object.Parent = pobj
 
-		wait()
+		task.wait()	
 
 		speed = preSpeed
 	else
@@ -1013,7 +1013,7 @@ function placement:noPlotActivate(id, pobj, r, a)
 	-- Sets properties of the model (CanCollide, Transparency)
 	for i, o in pairs(object:GetDescendants()) do
 		if o then
-			if o:IsA("Part") or o:IsA("UnionOperation") or o:IsA("MeshPart") then
+			if o:IsA("BasePart") then
 				o.CanCollide = false
 				o.Anchored = true
 
@@ -1079,7 +1079,7 @@ function placement:noPlotActivate(id, pobj, r, a)
 		setCurrentState(1)
 		object.Parent = pobj
 
-		wait()
+		task.wait()
 
 		speed = preSpeed
 	else
