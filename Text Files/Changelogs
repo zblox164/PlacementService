@@ -1,6 +1,6 @@
 --[[
 
-Current Version - V1.5.4
+Current Version - V1.5.5
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -104,6 +104,11 @@ Change log:
 	- Improved error messaging
 2022-02-18 V1.5.4 - Details:
 	Module changes
+	- Minor Improvements
+	- Minor Fixes
+2022-04-20 V1.5.5 - Details:
+	Module changes
+	- Fixed callbacks being unusable
 	- Minor Improvements
 	- Minor Fixes
 ]]
