@@ -23,7 +23,7 @@ Zblox's Placement module V3 is a feature packed script that handles all the esse
 - [x] Grid fade in/out toggles
 - [x] Haptic feedback (XBOX)
 - [x] Interpolation (smoothing)
-- [x] No Plot Placement (does not require a plot) 
+- [x] No Plot Placement
 - [x] Optional audible feedback
 - [x] Rotation
 - [x] Server side placement
