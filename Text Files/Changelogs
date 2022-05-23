@@ -1,6 +1,8 @@
 --[[
 
-Current Version - V1.5.5
+Placement Service
+
+Current Version - V1.5.6
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -111,6 +113,9 @@ Change log:
 	- Fixed callbacks being unusable
 	- Minor Improvements
 	- Minor Fixes
+2022-05-23 V1.5.6 - Details:
+	Module changes
+	- Renamed from "Placement Module V3" to "Placement Service"
 ]]
 
 -- Created and written by zblox164 (2020-2022)
