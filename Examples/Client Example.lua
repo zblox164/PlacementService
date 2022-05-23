@@ -5,8 +5,8 @@ Written by zblox164
 
 -- Assume non defined variables are pre defined
 -- Placement module variables
-local placementModule = require(modules:WaitForChild("PlacementModuleV3")) -- Assume this location is valid
-local placementInfo = placementModule.new(
+local placementService = require(modules:WaitForChild("PlacementService")) -- Assume this location is valid
+local placementInfo = placementService.new(
 	grid,
 	models,
 	Enum.KeyCode.R, Enum.KeyCode.X, Enum.KeyCode.U, Enum.KeyCode.L,
