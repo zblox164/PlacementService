@@ -1,8 +1,8 @@
-# Placement Module V3
+# Placement Service
 
 This module was developed using and intended for Roblox Studio
 
-Zblox's Placement module V3 is a feature packed script that handles all the essentials of a sandbox tycoon style placement system! The module makes it easy to setup a fully functional placement system within minutes! 
+Placement Service is an advanced kit that allows you to create a fully functional sandbox tycoon style placement system without going through the hassle of creating on from scratch yourself! With countless polished and easy to use features, anyone with basic Luau knowledge can make a unique and secure placement system in minutes!
 
 ---
 
@@ -34,7 +34,9 @@ More coming soon!
 
 ---
 
-This module is the first iteration out of three modules to be object oriented making it even more powerful. It is also the **easiest** published placement system kit on the Roblox platform!
+NOTE: Was originally named "Placement Module V3". This module no longer goes by that name.
+
+This module is the first iteration out of three modules to be object oriented making it even more powerful. It is also the **easiest** published placement system kit on the Roblox platform! 
 
 ## Benefits of this module
 
@@ -50,6 +52,6 @@ Want to use this module in your game/project? Use the resources below to learn h
 - [Dev forum tutorial](https://devforum.roblox.com/t/how-to-use-my-placement-module-v3/698753/1)
 - [Placement Module Wiki](https://zblox164.github.io/PlacementModuleV3/)
 
-This module and all of its content was written by [zblox164](https://www.roblox.com/users/60715914/profile). You can get the module in the Roblox library [here](https://www.roblox.com/library/5073110873/Placement-Module-V3).
+This module and all of its content was written by [zblox164](https://www.roblox.com/users/60715914/profile). You can get the module in the Roblox library [here](https://www.roblox.com/library/5073110873/Placement-Service).
 
-Module Version: 1.5.5
+Module Version: 1.5.6
