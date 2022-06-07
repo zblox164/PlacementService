@@ -49,8 +49,8 @@ This module is the first iteration out of three modules to be object oriented ma
 Want to use this module in your game/project? Use the resources below to learn how the module works:
 
 - Use the API and sample code included with the module
-- [Dev forum tutorial](https://devforum.roblox.com/t/how-to-use-my-placement-module-v3/698753/1)
-- [Placement Module Wiki](https://zblox164.github.io/PlacementModuleV3/)
+- [Dev forum tutorial](https://devforum.roblox.com/t/how-to-use-placement-service/698753)
+- [Placement Module Wiki](https://zblox164.github.io/PlacementService/)
 
 This module and all of its content was written by [zblox164](https://www.roblox.com/users/60715914/profile). You can get the module in the Roblox library [here](https://www.roblox.com/library/5073110873/Placement-Service).
 
