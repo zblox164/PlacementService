@@ -6,7 +6,7 @@ Placement Service
 
 As of version 1.5.6, this module was renamed from "Placement Module V3" to "Placement Service".
 
-Current Version - V1.5.6
+Current Version - V1.5.7
 Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
 ]]--
@@ -19,45 +19,49 @@ placement.__index = placement
 -- SETTINGS (DO NOT EDIT SETTINGS IN THE SCRIPT. USE THE ATTRIBUTES INSTEAD)
 
 -- Bools
-local interpolation = script:GetAttribute("Interpolation") -- Toggles interpolation (smoothing)
-local moveByGrid = script:GetAttribute("MoveByGrid") -- Toggles grid system
-local collisions = script:GetAttribute("Collisions") -- Toggles collisions
+local angleTilt = script:GetAttribute("AngleTilt") -- Toggles if you want the object to tilt when moving (based on speed)
+local audibleFeedback = script:GetAttribute("AudibleFeedback") -- Toggles sound feedback on placement
 local buildModePlacement = script:GetAttribute("BuildModePlacement") -- Toggles "build mode" placement
+local collisions = script:GetAttribute("Collisions") -- Toggles collisions
 local displayGridTexture = script:GetAttribute("DisplayGridTexture") -- Toggles the grid texture to be shown when placing
-local smartDisplay = script:GetAttribute("SmartDisplay") -- Toggles smart display for the grid. If true, it will rescale the grid texture to match your gridsize
 local enableFloors = script:GetAttribute("EnableFloors") -- Toggles if the raise and lower keys will be enabled
-local transparentModel = script:GetAttribute("TransparentModel") -- Toggles if the model itself will be transparent
-local instantActivation = script:GetAttribute("InstantActivation") -- Toggles if the model will appear at the mouse position immediately when activating placement
-local includeSelectionBox = script:GetAttribute("IncludeSelectionBox") -- Toggles if a selection box will be shown while placing
 local gridFadeIn = script:GetAttribute("GridFadeIn") -- If you want the grid to fade in when activating placement
 local gridFadeOut = script:GetAttribute("GridFadeOut") -- If you want the grid to fade out when ending placement
-local audibleFeedback = script:GetAttribute("AudibleFeedback") -- Toggles sound feedback on placement
+local includeSelectionBox = script:GetAttribute("IncludeSelectionBox") -- Toggles if a selection box will be shown while placing
+local instantActivation = script:GetAttribute("InstantActivation") -- Toggles if the model will appear at the mouse position immediately when activating placement
+local interpolation = script:GetAttribute("Interpolation") -- Toggles interpolation (smoothing)
+local invertAngleTilt = script:GetAttribute("InvertAngleTilt") -- Inverts the direction of the angle tilt
+local moveByGrid = script:GetAttribute("MoveByGrid") -- Toggles grid system
 local preferSignals = script:GetAttribute("PreferSignals") -- Controls if you want to use signals or callbacks
+local smartDisplay = script:GetAttribute("SmartDisplay") -- Toggles smart display for the grid. If true, it will rescale the grid texture to match your gridsize
+local transparentModel = script:GetAttribute("TransparentModel") -- Toggles if the model itself will be transparent
 
 -- Color3
 local collisionColor = script:GetAttribute("CollisionColor3") -- Color of the hitbox when colliding
 local hitboxColor = script:GetAttribute("HitboxColor3") -- Color of the hitbox while not colliding
-local selectionColor = script:GetAttribute("SelectionBoxColor3") -- Color of the selectionBox lines (includeSelectionBox much be set to "true")
 local selectionCollisionColor = script:GetAttribute("SelectionBoxCollisionColor3") -- Color of the selectionBox lines when colliding (includeSelectionBox much be set to "true")
+local selectionColor = script:GetAttribute("SelectionBoxColor3") -- Color of the selectionBox lines (includeSelectionBox much be set to "true")
 
 -- Integers (Will round to nearest unit if given float)
-local maxHeight = script:GetAttribute("MaxHeight") -- Max height you can place objects (in studs)
 local floorStep = script:GetAttribute("FloorStep") -- The step (in studs) that the object will be raised or lowered
-local rotationStep = script:GetAttribute("RotationStep") -- Rotation step
 local gridTextureScale = script:GetAttribute("GridTextureScale") -- How large the StudsPerTileU/V is displayed (smartDisplay must be set to false)
+local maxHeight = script:GetAttribute("MaxHeight") -- Max height you can place objects (in studs)
 local maxRange = script:GetAttribute("MaxRange") -- Max range for the model (in studs)
+local rotationStep = script:GetAttribute("RotationStep") -- Rotation step
 
 -- Numbers/Floats
+local angleTiltAmplitude = script:GetAttribute("AngleTiltAmplitude") -- How much the object will tilt when moving. 0 = min, 10 = max
+local audioVolume = script:GetAttribute("AudioVolume") -- Volume of the sound feedback
 local hitboxTransparency = script:GetAttribute("HitboxTransparency") -- Hitbox transparency when placing
-local transparencyDelta = script:GetAttribute("TransparencyDelta") -- Transparency of the model itself (transparentModel must equal true)
-local lerpSpeed = script:GetAttribute("LerpSpeed") -- speed of interpolation. 0 = no interpolation, 0.9 = major interpolation
-local placementCooldown = script:GetAttribute("PlacementCooldown") -- How quickly the user can place down objects (in seconds)
+local lerpSpeed = script:GetAttribute("LerpSpeed") -- Speed of interpolation. 0 = no interpolation, 0.9 = major interpolation
 local lineThickness = script:GetAttribute("LineThickness") -- How thick the line of the selection box is (includeSelectionBox much be set to "true")
 local lineTransparency = script:GetAttribute("LineTransparency") -- How transparent the line of the selection box is (includeSelectionBox must be set to "true")
-local volume = script:GetAttribute("AudioVolume") -- Volume of the sound feedback
+local placementCooldown = script:GetAttribute("PlacementCooldown") -- How quickly the user can place down objects (in seconds)
+local targetFPS = script:GetAttribute("TargetFPS") -- The target constant FPS
+local transparencyDelta = script:GetAttribute("TransparencyDelta") -- Transparency of the model itself (transparentModel must equal true)
 
 -- Other
-local gridTexture = script:GetAttribute("GridTextureID")
+local gridTexture = script:GetAttribute("GridTextureID") -- ID of the grid texture shown while placing (requires DisplayGridTexture == true)
 local soundID = script:GetAttribute("SoundID") -- ID of the sound played on Placement (requires audibleFeedback == true)
 
 -- Cross Platform
@@ -71,6 +75,7 @@ local userInputService = game:GetService("UserInputService")
 local hapticService = game:GetService("HapticService")
 local guiService = game:GetService("GuiService")
 local insertService = game:GetService("InsertService")
+local tweenService = game:GetService("TweenService")
 
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -80,7 +85,6 @@ local mouse = player:GetMouse()
 -- math/cframe functions
 local clamp = math.clamp
 local floor = math.floor
-local ceil = math.ceil
 local abs = math.abs
 local min = math.min
 local pi = math.pi
@@ -103,20 +107,21 @@ local lastState : number = 4
 
 -- Constructor variables
 local GRID_UNIT : number
-local itemLocation : Model | Folder | Configuration
+local itemLocation : Instance
 local rotateKey : Enum.KeyCode
 local terminateKey : Enum.KeyCode
 local raiseKey : Enum.KeyCode
 local lowerKey : Enum.KeyCode
-local autoPlace : Enum.KeyCode
 local xboxRotate : Enum.KeyCode
 local xboxTerminate : Enum.KeyCode
 local xboxRaise : Enum.KeyCode
 local xboxLower : Enum.KeyCode
 
 -- Activation variables
-local plot
+local plot : BasePart
+local placedObjects : Instance
 local object
+local autoPlace : boolean
 
 -- bools
 local canActivate = true
@@ -124,6 +129,7 @@ local isMobile = false
 local isXbox = false
 local currentRot = false
 local removePlotDependencies
+local setup = false
 
 local running = false
 local canPlace
@@ -135,11 +141,13 @@ local range
 local speed = 1
 local preSpeed = 1
 local y
+local amplitude
+local dirX
+local dirZ
 local rot
 local initialY : number
 
 -- other
-local placedObjects
 local loc
 local primary : Part
 local selection
@@ -155,6 +163,16 @@ local messages = {
 	["301"] = "Error code 301: You have improperly setup your callback function. Please input a valid callback.",
 	["401"] = "Error code 401: Grid size is too close to the plot size. To fix this, try lowering the grid size.",
 }
+
+-- Tween Info
+local fade = TweenInfo.new(
+	0.3,
+	Enum.EasingStyle.Sine,
+	Enum.EasingDirection.Out,
+	0,
+	false,
+	0
+)
 
 -- signals
 local placed : BindableEvent
@@ -210,9 +228,9 @@ local function checkHitbox()
 
 		-- Checks if there is collision on any object that is not a child of the object and is not a child of the player
 		for i = 1, #collisionPoints do
-			if not collisionPoints[i]:IsDescendantOf(object) and not collisionPoints[i]:IsDescendantOf(character) then
+			if not collisionPoints[i]:IsDescendantOf(object) and not collisionPoints[i]:IsDescendantOf(character) and collisionPoints[i] ~= plot then
 				setCurrentState(3)
-				
+
 				if preferSignals then
 					collided:Fire(collisionPoints[i])
 				end
@@ -232,7 +250,7 @@ local function raiseFloor(actionName, inputState, inputObj)
 	if currentState ~= 4 and inputState == Enum.UserInputState.Begin then
 		if enableFloors and not stackable then
 			y += floor(abs(floorStep))
-			
+
 			if preferSignals then
 				changeFloors:Fire(true)
 			end
@@ -244,7 +262,7 @@ local function lowerFloor(actionName, inputState, inputObj)
 	if currentState ~= 4 and inputState == Enum.UserInputState.Begin then
 		if enableFloors and not stackable then
 			y -= floor(abs(floorStep))
-			
+
 			if preferSignals then
 				changeFloors:Fire(false)
 			end
@@ -278,13 +296,8 @@ local function displayGrid()
 	end
 
 	if gridFadeIn then
-		coroutine.resume(coroutine.create(function()
-			for i = 1, 0, -0.1 do
-				gridTex.Transparency = i
-
-				task.wait(0.01)
-			end
-		end))
+		local tween = tweenService:Create(gridTex, fade, {Transparency = 0})
+		tween:Play()
 	else
 		gridTex.Transparency = 0
 	end
@@ -305,7 +318,7 @@ end
 local function createAudioFeedback()
 	audio = Instance.new("Sound")
 	audio.Name = "placementFeedback"
-	audio.Volume = volume
+	audio.Volume = audioVolume
 	audio.SoundId = soundID
 	audio.Parent = player.PlayerGui
 end
@@ -322,19 +335,19 @@ local function ROTATE(actionName, inputState, inputObj)
 		if smartRot then
 			-- Rotates the model depending on if currentRot is true/false
 			if currentRot then
-				rot = rot + rotationStep
+				rot += rotationStep
 			else 
-				rot = rot - rotationStep
+				rot -= rotationStep
 			end
 		else
-			rot = rot + rotationStep
+			rot += rotationStep
 		end
 
 		-- Toggles currentRot
 		if rot%90 == 0 then
 			currentRot = not currentRot
 		end
-		
+
 		if preferSignals then
 			rotated:Fire()
 		end
@@ -353,13 +366,13 @@ local function bounds(c, cx, cz) : CFrame
 
 	local LOWER_Z_BOUND
 	local UPPER_Z_BOUND
-	
+
 	LOWER_X_BOUND = plot.Position.X - (plot.Size.X*0.5) + cx
 	UPPER_X_BOUND = plot.Position.X + (plot.Size.X*0.5) - cx
 
 	LOWER_Z_BOUND = plot.Position.Z - (plot.Size.Z*0.5)	+ cz
 	UPPER_Z_BOUND = plot.Position.Z + (plot.Size.Z*0.5) - cz
-	
+
 	local newX = clamp(c.X, LOWER_X_BOUND, UPPER_X_BOUND)
 	local newZ = clamp(c.Z, LOWER_Z_BOUND, UPPER_Z_BOUND)
 	local newCFrame = cframe(newX, y, newZ)
@@ -369,24 +382,40 @@ end
 
 -- Returns a rounded cframe to the nearest grid unit
 local function snapCFrame(c) : CFrame
-	local newX = round(c.X/GRID_UNIT)*GRID_UNIT
-	local newZ = round(c.Z/GRID_UNIT)*GRID_UNIT
+	local offsetX = (plot.Size.X % (2*GRID_UNIT))*0.5
+	local offsetZ = (plot.Size.Z % (2*GRID_UNIT))*0.5
+	local newX = round(c.X/GRID_UNIT)*GRID_UNIT - offsetX
+	local newZ = round(c.Z/GRID_UNIT)*GRID_UNIT - offsetZ
 	local newCFrame = cframe(newX, 0, newZ)
 
 	return newCFrame
 end
 
+-- Calculates the "tilt" angle
+local function calcAngle(last, current) : CFrame
+	if angleTilt then
+		-- Calculates and clamps the proper angle amount
+		local tiltX = (math.clamp((last.X - current.X), -10, 10)*pi/180)*amplitude
+		local tiltZ = (math.clamp((last.Z - current.Z), -10, 10)*pi/180)*amplitude
+
+		-- Returns the proper angle based on rotation
+		return (anglesXYZ(dirZ*tiltZ, 0, dirX*tiltX):Inverse()*anglesXYZ(0, rot*pi/180, 0)):Inverse()*anglesXYZ(0, rot*pi/180, 0)
+	else
+		return anglesXYZ(0, 0, 0)
+	end
+end
+
 -- Calculates the position of the object
-local function calculateItemLocation()
+local function calculateItemLocation(last, final) : CFrame
 	local x, z
 	local cx, cz
 	local pos = cframe(0, 0, 0)
 	local finalC = cframe(0, 0, 0)
-	
+
 	if currentRot then
 		cx = primary.Size.X*0.5
 		cz = primary.Size.Z*0.5
-		
+
 		if not isMobile then
 			x, z = mouse.Hit.X - cx, mouse.Hit.Z - cz
 			target = mouse.Target
@@ -394,7 +423,7 @@ local function calculateItemLocation()
 			local cam = workspace.CurrentCamera
 			local camPos = cam.CFrame.Position
 			local ray = workspace:Raycast(camPos, cam.CFrame.LookVector*maxRange, raycastParams)
-			
+
 			if ray then
 				x, z = ray.Position.X - cx, ray.Position.Z - cz
 				target = ray.Instance
@@ -403,7 +432,7 @@ local function calculateItemLocation()
 	else
 		cx = primary.Size.Z*0.5
 		cz = primary.Size.X*0.5
-		
+
 		if not isMobile then
 			x, z = mouse.Hit.X - cx, mouse.Hit.Z - cz
 			target = mouse.Target
@@ -411,7 +440,7 @@ local function calculateItemLocation()
 			local cam = workspace.CurrentCamera
 			local camPos = cam.CFrame.Position
 			local ray = workspace:Raycast(camPos, cam.CFrame.LookVector*maxRange, raycastParams)
-			
+
 			if ray then
 				x, z = ray.Position.X - cx, ray.Position.Z - cz
 				target = ray.Instance
@@ -421,12 +450,12 @@ local function calculateItemLocation()
 
 	-- Clamps y to a max height above the plot position
 	y = clamp(y, initialY, maxHeight + initialY)
-	
+
 	-- Changes y depending on mouse target
 	if stackable and target and (target:IsDescendantOf(placedObjects) or target == plot) then
 		y = calculateYPos(target.Position.Y, target.Size.Y, primary.Size.Y)
 	end
-	
+
 	if moveByGrid then
 		-- Calculates the correct position
 		local pltCFrame = cframe(plot.CFrame.X, plot.CFrame.Y, plot.CFrame.Z)
@@ -436,27 +465,31 @@ local function calculateItemLocation()
 	else
 		finalC = cframe(x, y, z)*cframe(cx, 0, cz)
 	end
-	
+
 	if not removePlotDependencies then
 		finalC = bounds(finalC, cx, cz)
 	else
 		finalC = cframe(finalC.X, y, finalC.Z)
 	end
-
-	return finalC*anglesXYZ(0, rot*pi/180, 0)	
+	
+	if final or not interpolation then
+		return finalC*anglesXYZ(0, rot*pi/180, 0)
+	end
+	
+	return finalC*anglesXYZ(0, rot*pi/180, 0)*calcAngle(last, finalC)
 end
 
 -- Used for sending a final CFrame to the server when using interpolation.
 local function getFinalCFrame() : CFrame
-	return calculateItemLocation()
+	return calculateItemLocation(nil, true)
 end
 
 -- Sets the position of the object
-local function translateObj()
+local function translateObj(dt)
 	if currentState ~= 2 and currentState ~= 4 then
 		if getRange() > maxRange then
 			setCurrentState(5)
-			
+
 			if preferSignals then
 				outOfRange:Fire()
 			end
@@ -475,7 +508,11 @@ local function translateObj()
 			end
 		end
 
-		object:PivotTo(primary.CFrame:Lerp(calculateItemLocation(), speed))
+		if interpolation and not setup then
+			object:PivotTo(primary.CFrame:Lerp(calculateItemLocation(primary.CFrame.Position), speed*dt*targetFPS))
+		else
+			object:PivotTo(calculateItemLocation(primary.CFrame.Position))
+		end
 	end
 end
 
@@ -495,7 +532,7 @@ end
 local function TERMINATE_PLACEMENT()
 	if object then
 		setCurrentState(4)
-		
+
 		mobileUI.Parent = script
 
 		if selection then
@@ -515,15 +552,14 @@ local function TERMINATE_PLACEMENT()
 			for i, v in ipairs(plot:GetChildren()) do
 				if v.Name == "GridTexture" and v:IsA("Texture") then
 					if gridFadeOut then
-						coroutine.resume(coroutine.create(function()
-							for i = v.Transparency, 1, 0.1 do
-								v.Transparency = i
-
-								task.wait(0.01)
-							end
-
+						local tween = tweenService:Create(v, fade, {Transparency = 1})
+						tween:Play()
+						
+						local connection = tween.Completed:Connect(function()
 							v:Destroy()
-						end))
+						end)
+						
+						connection:Disconnect()
 					else
 						v:Destroy()
 					end	
@@ -540,7 +576,7 @@ local function TERMINATE_PLACEMENT()
 		unbindInputs()
 
 		mouse.TargetFilter = nil
-		
+
 		if preferSignals then
 			terminated:Fire()
 		end
@@ -604,37 +640,52 @@ local function createHapticFeedback()
 end
 
 local function updateAttributes()
-	interpolation = script:GetAttribute("Interpolation")
-	moveByGrid = script:GetAttribute("MoveByGrid")
-	collisions = script:GetAttribute("Collisions")
+	angleTilt = script:GetAttribute("AngleTilt")
+	audibleFeedback = script:GetAttribute("AudibleFeedback")
 	buildModePlacement = script:GetAttribute("BuildModePlacement")
+	collisions = script:GetAttribute("Collisions")
 	displayGridTexture = script:GetAttribute("DisplayGridTexture")
-	smartDisplay = script:GetAttribute("SmartDisplay")
 	enableFloors = script:GetAttribute("EnableFloors")
-	transparentModel = script:GetAttribute("TransparentModel")
-	instantActivation = script:GetAttribute("InstantActivation")
-	includeSelectionBox = script:GetAttribute("IncludeSelectionBox")
 	gridFadeIn = script:GetAttribute("GridFadeIn")
 	gridFadeOut = script:GetAttribute("GridFadeOut")
-	audibleFeedback = script:GetAttribute("AudibleFeedback")
+	includeSelectionBox = script:GetAttribute("IncludeSelectionBox")
+	instantActivation = script:GetAttribute("InstantActivation")
+	interpolation = script:GetAttribute("Interpolation")
+	invertAngleTilt = script:GetAttribute("InvertAngleTilt")
+	moveByGrid = script:GetAttribute("MoveByGrid")
+	preferSignals = script:GetAttribute("PreferSignals")
+	smartDisplay = script:GetAttribute("SmartDisplay")
+	transparentModel = script:GetAttribute("TransparentModel")
+
+	-- Color3
 	collisionColor = script:GetAttribute("CollisionColor3")
 	hitboxColor = script:GetAttribute("HitboxColor3")
-	selectionColor = script:GetAttribute("SelectionBoxColor3")
 	selectionCollisionColor = script:GetAttribute("SelectionBoxCollisionColor3")
-	maxHeight = script:GetAttribute("MaxHeight")
+	selectionColor = script:GetAttribute("SelectionBoxColor3")
+
+	-- Integers (Will round to nearest unit if given float)
 	floorStep = script:GetAttribute("FloorStep")
-	rotationStep = script:GetAttribute("RotationStep")
 	gridTextureScale = script:GetAttribute("GridTextureScale")
+	maxHeight = script:GetAttribute("MaxHeight")
 	maxRange = script:GetAttribute("MaxRange")
+	rotationStep = script:GetAttribute("RotationStep")
+
+	-- Numbers/Floats
+	angleTiltAmplitude = script:GetAttribute("AngleTiltAmplitude")
+	audioVolume = script:GetAttribute("AudioVolume")
 	hitboxTransparency = script:GetAttribute("HitboxTransparency")
-	transparencyDelta = script:GetAttribute("TransparencyDelta")
 	lerpSpeed = script:GetAttribute("LerpSpeed")
-	placementCooldown = script:GetAttribute("PlacementCooldown")
 	lineThickness = script:GetAttribute("LineThickness")
 	lineTransparency = script:GetAttribute("LineTransparency")
-	volume = script:GetAttribute("AudioVolume")
+	placementCooldown = script:GetAttribute("PlacementCooldown")
+	targetFPS = script:GetAttribute("TargetFPS")
+	transparencyDelta = script:GetAttribute("TransparencyDelta")
+
+	-- Other
 	gridTexture = script:GetAttribute("GridTextureID")
 	soundID = script:GetAttribute("SoundID")
+
+	-- Cross Platform
 	hapticFeedback = script:GetAttribute("HapticFeedback")
 	vibrateAmount = script:GetAttribute("HapticVibrationAmount")
 
@@ -671,8 +722,8 @@ local function PLACEMENT(func, callback)
 				if currentState == 2 or currentState == 1 then
 					setCurrentState(2)
 
-					func:InvokeServer(object.Name, placedObjects, loc, cf, collisions, plot)
-					
+					local i = func:InvokeServer(object.Name, placedObjects, loc, cf, collisions, plot)
+
 					if preferSignals then
 						placed:Fire()
 					else
@@ -684,8 +735,11 @@ local function PLACEMENT(func, callback)
 					end
 
 					setCurrentState(1)
-					playAudio()
-
+					
+					if i then
+						playAudio()
+					end
+					
 					if hapticFeedback and guiService:IsTenFootInterface() then
 						createHapticFeedback()
 					end
@@ -700,7 +754,7 @@ local function PLACEMENT(func, callback)
 					if func:InvokeServer(object.Name, placedObjects, loc, cf, collisions, plot) then
 						TERMINATE_PLACEMENT()
 						playAudio()
-						
+
 						if preferSignals then
 							placed:Fire()
 						else
@@ -752,7 +806,7 @@ local function approveActivation()
 end
 
 -- Constructor function
-function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
+function placement.new(g : number, objs : Instance, r : Enum.KeyCode, t : Enum.KeyCode, u : Enum.KeyCode, l : Enum.KeyCode, xbr : Enum.KeyCode, xbt : Enum.KeyCode, xbu : Enum.KeyCode, xbl : Enum.KeyCode)
 	local placementInfo = {}
 	setmetatable(placementInfo, placement)
 
@@ -778,7 +832,7 @@ function placement.new(g, objs, r, t, u, l, xbr, xbt, xbu, xbl)
 	placementInfo.XBOX_TERMINATE = xboxTerminate or Enum.KeyCode.ButtonB
 	placementInfo.XBOX_RAISE = xboxRaise or Enum.KeyCode.ButtonY
 	placementInfo.XBOX_LOWER = xboxLower or Enum.KeyCode.ButtonA
-	placementInfo.version = "1.5.6"
+	placementInfo.version = "1.5.7"
 	placementInfo.MobileUI = script:FindFirstChildOfClass("ScreenGui")
 
 	placed = Instance.new("BindableEvent")
@@ -877,11 +931,11 @@ function placement:requestPlacement(func, callback)
 end
 
 -- Activates placement
-function placement:activate(id, pobj, plt, stk, r, a)
+function placement:activate(id : string, pobj : Instance, plt : BasePart, stk : boolean, r : boolean, a : boolean)
 	if GET_PLATFORM() == "Mobile" then
 		mobileUI.Parent = player.PlayerGui
 	end
-	
+
 	if currentState ~= 4 then
 		TERMINATE_PLACEMENT()
 	end
@@ -947,8 +1001,10 @@ function placement:activate(id, pobj, plt, stk, r, a)
 	-- Gets the initial y pos and gives it to y
 	initialY = calculateYPos(plt.Position.Y, plt.Size.Y, object.PrimaryPart.Size.Y)
 	y = initialY
-	speed = 0
 	rot = 0
+	dirX = -1
+	dirZ = 1
+	amplitude = clamp(angleTiltAmplitude, 0, 10)
 	currentRot = true
 	removePlotDependencies = false
 	autoPlace = a
@@ -960,11 +1016,17 @@ function placement:activate(id, pobj, plt, stk, r, a)
 
 	-- Sets up interpolation speed
 	speed = 1
+	
+	if invertAngleTilt then
+		dirX = 1
+		dirZ = -1
+	end
 
 	if interpolation then
 		preSpeed = clamp(abs(tonumber(1 - lerpSpeed)), 0, 0.9)
 
 		if instantActivation then
+			setup = true
 			speed = 1
 		else
 			speed = preSpeed
@@ -985,18 +1047,20 @@ function placement:activate(id, pobj, plt, stk, r, a)
 
 		warn(messages["101"])
 	end
-	
+
 	if preferSignals then
 		activated:Fire()
 	end
+
+	setup = false
 end
 
 -- REMOVE THIS FUNCTION IF YOU ARE NOT GOING TO USE IT
-function placement:noPlotActivate(id, pobj, r, a)
+function placement:noPlotActivate(id : string, pobj : Instance, r : boolean, a : boolean)
 	if GET_PLATFORM() == "Mobile" then
 		mobileUI.Parent = player.PlayerGui
 	end
-	
+
 	if currentState ~= 4 then
 		TERMINATE_PLACEMENT()
 	end
@@ -1040,19 +1104,21 @@ function placement:noPlotActivate(id, pobj, r, a)
 	removePlotDependencies = true
 	raycastParams.FilterDescendantsInstances = {placedObjects, character}
 	raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
-	
+
 	-- Toggles buildmode placement (infinite placement) depending on if set true by the user
 	if buildModePlacement then
 		canActivate = true
 	else
 		canActivate = false
 	end
-
+	
 	-- Gets the initial y pos and gives it to y
 	initialY = calculateYPos(plot.Position.Y, plot.Size.Y, object.PrimaryPart.Size.Y)
 	y = initialY
-	speed = 0
 	rot = 0
+	dirX = -1
+	dirZ = 1
+	amplitude = clamp(angleTiltAmplitude, 0, 10)
 	currentRot = true
 	autoPlace = a
 
@@ -1063,11 +1129,17 @@ function placement:noPlotActivate(id, pobj, r, a)
 
 	-- Sets up interpolation speed
 	speed = 1
+	
+	if invertAngleTilt then
+		dirX = 1
+		dirZ = -1
+	end
 
 	if interpolation then
 		preSpeed = clamp(abs(tonumber(1 - lerpSpeed)), 0, 0.9)
 
 		if instantActivation then
+			setup = true
 			speed = 1
 		else
 			speed = preSpeed
@@ -1088,10 +1160,12 @@ function placement:noPlotActivate(id, pobj, r, a)
 
 		warn(messages["101"])
 	end
-	
+
 	if preferSignals then
 		activated:Fire()
 	end
+	
+	setup = false
 end
 
 runService:BindToRenderStep("Input", Enum.RenderPriority.Input.Value, translateObj)
