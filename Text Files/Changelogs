@@ -2,7 +2,7 @@
 
 Placement Service
 
-Current Version - V1.5.6
+Current Version - V1.5.7
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -116,6 +116,15 @@ Change log:
 2022-05-23 V1.5.6 - Details:
 	Module changes
 	- Renamed from "Placement Module V3" to "Placement Service"
+2022-06-15 V1.5.7 - Details:
+	Module changes
+	- Added new attributes:
+		AngleTilt [FEATURE]
+		AngleTiltAmplitude
+		InverseAngleTilt
+		TargetFPS [FEATURE]
+	- Improved grid fade in/out to now use tween service in place of loops
+	- Minor Improvements and fixes
 ]]
 
 -- Created and written by zblox164 (2020-2022)
