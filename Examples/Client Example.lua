@@ -13,6 +13,12 @@ local placementInfo = placementService.new(
 	Enum.KeyCode.ButtonR1, Enum.KeyCode.ButtonX, Enum.KeyCode.DPadUp, Enum.KeyCode.DPadDown
 )
 
+local connection1
+local connection2
+local connection3
+local connection4
+local connection5
+
 -- Signals
 placementInfo.Placed:Connect(function()
 	print("placed")
@@ -62,6 +68,14 @@ local function clientPlacement()
 	if placementInfo:getCurrentState() == "inactive" and not placementInfo:getPlatform() == "Mobile" then
 		contextActionService:UnbindAction("place")
 	end
+	
+	if placementInfo:getCurrentState() == "inactive" and placementInfo:getPlatform() == "Mobile" then
+		connection1:Disconnect()
+		connection2:Disconnect()
+		connection3:Disconnect()
+		connection4:Disconnect()
+		connection5:Disconnect()
+	end
 end
 
 local function startPlacement()	
@@ -69,11 +83,11 @@ local function startPlacement()
 	if placementInfo:getPlatform() ~= "Mobile" then
 		contextActionService:BindAction("place", clientPlacement, false, Enum.UserInputType.MouseButton1, Enum.KeyCode.ButtonR1)
 	else
-		placementInfo.MobileUI.place.MouseButton1Click:Connect(clientPlacement)
-		placementInfo.MobileUI.raise.MouseButton1Click:Connect(raise)
-		placementInfo.MobileUI.lower.MouseButton1Click:Connect(lower)
-		placementInfo.MobileUI.cancel.MouseButton1Click:Connect(cancel)
-		placementInfo.MobileUI.rotate.MouseButton1Click:Connect(rotate)
+		connection1 = placementInfo.MobileUI.place.MouseButton1Click:Connect(clientPlacement)
+		connection2 = placementInfo.MobileUI.raise.MouseButton1Click:Connect(raise)
+		connection3 = placementInfo.MobileUI.lower.MouseButton1Click:Connect(lower)
+		connection4 = placementInfo.MobileUI.cancel.MouseButton1Click:Connect(cancel)
+		connection5 = placementInfo.MobileUI.rotate.MouseButton1Click:Connect(rotate)
 	end
 	
 	placementInfo:activate(model.Name, itemHolder, plot, true, true, false) -- assume variables are set
