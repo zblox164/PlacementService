@@ -30,7 +30,7 @@ FAQ:
 	A. Yes! This module supports XBOX, PC and Mobile devices!
 	
 	Q. Do I have to credit you for using this module?
-	A. No, however you cannot claim it as your own work.
+	A. No, however you cannot claim it as your own.
 
 If you are interested in learning this module, here are some resources you can use:
  * Look in the API script (sample code is included there)
