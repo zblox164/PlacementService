@@ -67,9 +67,7 @@ local function clientPlacement()
 	
 	if placementInfo:getCurrentState() == "inactive" and not placementInfo:getPlatform() == "Mobile" then
 		contextActionService:UnbindAction("place")
-	end
-	
-	if placementInfo:getCurrentState() == "inactive" and placementInfo:getPlatform() == "Mobile" then
+	elseif placementInfo:getCurrentState() == "inactive" and placementInfo:getPlatform() == "Mobile"
 		connection1:Disconnect()
 		connection2:Disconnect()
 		connection3:Disconnect()
