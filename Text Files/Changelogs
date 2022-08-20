@@ -2,7 +2,7 @@
 
 Placement Service
 
-Current Version - V1.5.7
+Current Version - V1.5.8
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -125,6 +125,16 @@ Change log:
 		TargetFPS [FEATURE]
 	- Improved grid fade in/out to now use tween service in place of loops
 	- Minor Improvements and fixes
+2022-08-19 V1.5.8 - Details:
+	Module changes
+	- Migrated to use raycasts instead of the mouse object
+	- Improved position accuracy
+	- Improved stacking
+	- Improved collision detection for interpolation and angle tilting
+	- Positions are now relative to plots rotation
+	- Added new parameter in the new() constructor to allow for ignored objects
+	- Added new attribute: RemoveCollisionsIfIgnored
+	- Minor improvements and fixes
 ]]
 
 -- Created and written by zblox164 (2020-2022)
