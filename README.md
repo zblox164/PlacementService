@@ -31,7 +31,7 @@ Placement Service is an advanced kit that allows you to create a fully functiona
 - [x] Server side placement
 - [x] Stackable objects
 - [x] Signals/Events system
-- [x] Ignoreable objects
+- [x] ignorable objects
 
 More coming soon!
 
