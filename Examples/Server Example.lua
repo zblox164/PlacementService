@@ -24,22 +24,15 @@ local function checkHitbox(character, object)
 	end
 end
 
-local function checkBoundaries(plot, primary)
-	local lowerXBound
-	local upperXBound
+local function checkBoundaries(plt, primary) : boolean
+	local pos = plt.CFrame
+	local size = CFrame.new(primary.Size)*CFrame.fromOrientation(0, primary.Orientation.Y, 0)
+	local currentPos = pos:Inverse()*primary.CFrame
 
-	local lowerZBound
-	local upperZBound
+	local xBound = (plt.Size.X - size.X)*0.5
+	local zBound = (plt.Size.Z - size.Z)*0.5
 
-	local currentPos = primary.Position
-
-	lowerXBound = plot.Position.X - (plot.Size.X*0.5) 
-	upperXBound = plot.Position.X + (plot.Size.X*0.5)
-
-	lowerZBound = plot.Position.Z - (plot.Size.Z*0.5)	
-	upperZBound = plot.Position.Z + (plot.Size.Z*0.5)
-
-	return currentPos.X > upperXBound or currentPos.X < lowerXBound or currentPos.Z > upperZBound or currentPos.Z < lowerZBound
+	return currentPos.X > xBound or currentPos.X < -xBound or currentPos.Z > zBound or currentPos.Z < -zBound
 end
 
 local function handleCollisions(char, item, c)
