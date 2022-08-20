@@ -31,6 +31,7 @@ Placement Service is an advanced kit that allows you to create a fully functiona
 - [x] Server side placement
 - [x] Stackable objects
 - [x] Signals/Events system
+- [x] Ignoreable objects
 
 More coming soon!
 
@@ -42,7 +43,7 @@ This module is the first iteration out of three modules to be object oriented ma
 
 ## Benefits of this module
 
-- **Includes many pre-built features.** 22 Are listed above.
+- **Includes many pre-built features.** 23 Are listed above.
 - **Is easy to learn and use.** The module has been designed with beginner programmers in mind. It only requires beginner scripting to get the system up and working. *It removes the hassle of creating a complex system of your own.*
 - **Regularly updated.** The module is always being updated with feature updates as well as bug fixes.
 
@@ -56,4 +57,4 @@ Want to use this module in your game/project? Use the resources below to learn h
 
 This module and all of its content was written by [zblox164](https://www.roblox.com/users/60715914/profile). You can get the module in the Roblox library [here](https://www.roblox.com/library/5073110873/Placement-Service).
 
-Module Version: 1.5.7
+Module Version: 1.5.8
