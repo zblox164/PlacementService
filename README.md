@@ -63,8 +63,8 @@ Want to use this module in your game/project? Use the resources below to learn h
 
 - Use the API and sample code included with the module
 - [Dev forum tutorial](https://devforum.roblox.com/t/how-to-use-placement-service/698753)
-- [Placement Module Wiki](https://zblox164.github.io/PlacementService/)
+- [Placement Service Wiki](https://zblox164.github.io/PlacementService/)
 
-This module and all of its content was written by [zblox164](https://www.roblox.com/users/60715914/profile). You can get the module in the Roblox library [here](https://www.roblox.com/library/5073110873/Placement-Service).
+This module and all of its content was written by [zblox164](https://www.roblox.com/users/60715914/profile). You can get Placement Service in the Roblox library [here](https://www.roblox.com/library/5073110873/Placement-Service).
 
 Module Version: 1.5.9
