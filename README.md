@@ -51,7 +51,7 @@ This module is the first iteration out of three modules to be object oriented ma
 
 - **It's Secure.** Placement Service is fully filtering enabled compatible to make secure gameplay easy for all of your players!
 
--- **It's Highly Customizable.** Placement Service is packed with features so that you can make a placement system that is perfect for your game! Don't want interpolation? Don't want a grid system? Changing these is as simple as unchecking a checkbox!
+- **It's Highly Customizable.** Placement Service is packed with features so that you can make a placement system that is perfect for your game! Don't want interpolation? Don't want a grid system? Changing these is as simple as unchecking a checkbox!
 ---
 
 Want to use this module in your game/project? Use the resources below to learn how the module works:
