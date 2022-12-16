@@ -1,36 +1,30 @@
 local replicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Ignore the top three functions
-
--- Credit EgoMoose
 local function checkHitbox(character, object)
 	if object then
-		local collided = false
+		local collided = false	
+		local collisionPoints = workspace:GetPartsInPart(object.PrimaryPart)
 
-		local collisionPoint = object.PrimaryPart.Touched:Connect(function() end)
-		local collisionPoints = object.PrimaryPart:GetTouchingParts()
-
-		for i = 1, #collisionPoints do
-			if not collisionPoints[i]:IsDescendantOf(object) and not collisionPoints[i]:IsDescendantOf(character) then
+		for i = 1, #collisionPoints, 1 do
+			if collisionPoints[i].CanTouch and not collisionPoints[i]:IsDescendantOf(object) and not collisionPoints[i]:IsDescendantOf(character) then
 				collided = true
 
 				break
 			end
 		end
 
-		collisionPoint:Disconnect()
-
 		return collided
 	end
 end
 
-local function checkBoundaries(plt, primary) : boolean
+local function checkBoundaries(plt: BasePart, primary: BasePart): boolean
 	local pos = plt.CFrame
-	local size = CFrame.new(primary.Size)*CFrame.fromOrientation(0, primary.Orientation.Y, 0)
+	local size = CFrame.fromOrientation(0, primary.Orientation.Y, 0)*primary.Size
 	local currentPos = pos:Inverse()*primary.CFrame
 
-	local xBound = (plt.Size.X - size.X)*0.5
-	local zBound = (plt.Size.Z - size.Z)*0.5
+	local xBound = (plt.Size.X - size.X)
+	local zBound = (plt.Size.Z - size.Z)
 
 	return currentPos.X > xBound or currentPos.X < -xBound or currentPos.Z > zBound or currentPos.Z < -zBound
 end
