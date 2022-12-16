@@ -41,12 +41,17 @@ NOTE: Was originally named "Placement Module V3". This module no longer goes by 
 
 This module is the first iteration out of three modules to be object oriented making it even more powerful. It is also the **easiest** published placement system kit on the Roblox platform! 
 
-## Benefits of this module
+## Benefits
 
-- **Includes many pre-built features.** 23 Are listed above.
-- **Is easy to learn and use.** The module has been designed with beginner programmers in mind. It only requires beginner scripting to get the system up and working. *It removes the hassle of creating a complex system of your own.*
-- **Regularly updated.** The module is always being updated with feature updates as well as bug fixes.
+- **It's Easy to Learn.** Placement Service was designed with beginner programmers in mind. It only requires beginner Luau scripting to get the system up and working while still maintaining a strong feature set for those who like to tinker! *It removes the hassle of creating a complex system of your own.*
 
+- **It's Polished and Reliable.** Over the period that Placement Service has been in development, I've had time to test and polish every feature included!
+
+- **Regularly Updated.** Placement Service is always being updated with bugs fixes, performance improvements, and feature updates!
+
+- **It's Secure.** Placement Service is fully filtering enabled compatible to make secure gameplay easy for all of your players!
+
+-- **It's Highly Customizable.** Placement Service is packed with features so that you can make a placement system that is perfect for your game! Don't want interpolation? Don't want a grid system? Changing these is as simple as unchecking a checkbox!
 ---
 
 Want to use this module in your game/project? Use the resources below to learn how the module works:
