@@ -2,7 +2,7 @@
 
 Placement Service
 
-Current Version - V1.5.9
+Current Version - V1.6.0
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -141,13 +141,21 @@ Change log:
 	- Fixed issue with MaxRange attribute
 	- Improved mobile stacking
 	- Added new attribute:
-		CharacterCollisions[FEATURE]
+		CharacterCollisions [FEATURE]
 	- Changed PlacementInfo properties:
 		gridsize is now GridUnit
 		items is now Items
 		version is now Version
 	- Minor code improvements
 	- Minor bug fixes
+2023-04-10 V1.6.0 - Details:
+	Module changes
+	- Major code improvements
+	- Minor bug fixes
+	- Fixed issue with CharacterCollisions
+	- Fixed issue with included server code
+	- Added new attribute:
+		UseHighlights [FEATURE]
 ]]
 
 -- Created and written by zblox164 (2020-2022)
