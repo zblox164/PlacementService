@@ -4,7 +4,7 @@
 
 Thank you for using Placement Service!
 
-Current Version - V1.6.0
+Current Version - V1.6.1
 Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
 ]]--
@@ -355,7 +355,7 @@ local function snapCFrame(c: CFrame): CFrame
 	return newCFrame
 end
 
--- Calculates the "tilt" angle
+ -- Calculates the "tilt" angle
 local function calcAngle(last: CFrame, current: CFrame): CFrame
 	if not angleTilt then return anglesXYZ(0, 0, 0) end
 	
@@ -411,7 +411,7 @@ local function calculateItemLocation(last, final: boolean): CFrame
 	local pltCFrame: CFrame = plot.CFrame
 	local positionCFrame = cframe(x, 0, z)*cframe(offsetX, 0, offsetZ)
 	
-	y = calculateYPos(plot.Position.Y, plot.Size.Y, primary.Size.Y, 0)
+	y = calculateYPos(plot.Position.Y, plot.Size.Y, primary.Size.Y, 1)
 
 	-- Changes y depending on mouse target
 	if stackable and target and (target:IsDescendantOf(placedObjects) or target == plot) then
