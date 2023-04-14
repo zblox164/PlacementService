@@ -2,7 +2,7 @@
 
 Placement Service
 
-Current Version - V1.6.0
+Current Version - V1.6.1
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -156,6 +156,10 @@ Change log:
 	- Fixed issue with included server code
 	- Added new attribute:
 		UseHighlights [FEATURE]
+2023-04-13 V1.6.1 - Details
+	Module changes
+	- Bug fixes from last update
+	- Server code bug fix
 ]]
 
 -- Created and written by zblox164 (2020-2022)
