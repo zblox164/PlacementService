@@ -1,6 +1,6 @@
 --[[
 Written by zblox164
-2021
+2023
 ]]
 
 -- Assume non defined variables are pre defined
@@ -20,8 +20,8 @@ local connection4
 local connection5
 
 -- Signals
-placementInfo.Placed:Connect(function()
-	print("placed")
+placementInfo.Placed:Connect(function(objectName)
+	print("placed " .. objectName)
 end)
 
 placementInfo.Collided:Connect(function(hit)
