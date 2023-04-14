@@ -781,7 +781,7 @@ function PlacementInfo.new(GridUnit: number, Prefabs: Instance,
 	self.XBOX_ROTATE = xboxRotate
 	self.XBOX_TERMINATE = xboxTerminate
 	self.XBOX_RAISE = xboxRaise
-	self.Version = "1.6.0"
+	self.Version = "1.6.1"
 	self.Creator = "zblox164"
 	self.MobileUI = script:FindFirstChildOfClass("ScreenGui")
 	self.IgnoredItems = {...}
