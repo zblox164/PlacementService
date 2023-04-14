@@ -1,0 +1,1984 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://zblox164.github.io/PlacementService/API/">
+      
+      <link rel="icon" href="../images/PlacementService.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+    
+    
+      
+        <title>API - Placement Service</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/button.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Placement Service" class="md-header__button md-logo" aria-label="Placement Service" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M48 0C21.53 0 0 21.53 0 48v64c0 8.84 7.16 16 16 16h80V48C96 21.53 74.47 0 48 0zm208 412.57V352h288V96c0-52.94-43.06-96-96-96H111.59C121.74 13.41 128 29.92 128 48v368c0 38.87 34.65 69.65 74.75 63.12C234.22 474 256 444.46 256 412.57zM288 384v32c0 52.93-43.06 96-96 96h336c61.86 0 112-50.14 112-112 0-8.84-7.16-16-16-16H288z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Placement Service
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="light_blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/zblox164/PlacementService/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Placement Service" class="md-nav__button md-logo" aria-label="Placement Service" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M48 0C21.53 0 0 21.53 0 48v64c0 8.84 7.16 16 16 16h80V48C96 21.53 74.47 0 48 0zm208 412.57V352h288V96c0-52.94-43.06-96-96-96H111.59C121.74 13.41 128 29.92 128 48v368c0 38.87 34.65 69.65 74.75 63.12C234.22 474 256 444.46 256 412.57zM288 384v32c0 52.93-43.06 96-96 96h336c61.86 0 112-50.14 112-112 0-8.84-7.16-16-16-16H288z"/></svg>
+
+    </a>
+    Placement Service
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/zblox164/PlacementService/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        API
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#constructors" class="md-nav__link">
+    Constructors
+  </a>
+  
+    <nav class="md-nav" aria-label="Constructors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#placementservicenew" class="md-nav__link">
+    PlacementService.new()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoactivate" class="md-nav__link">
+    PlacementInfo:activate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfonoplotactivate" class="md-nav__link">
+    PlacementInfo:noPlotActivate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforequestplacement" class="md-nav__link">
+    PlacementInfo:requestPlacement()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfogetcurrentstate" class="md-nav__link">
+    PlacementInfo:getCurrentState()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfopausecurrentstate" class="md-nav__link">
+    PlacementInfo:pauseCurrentState()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforesume" class="md-nav__link">
+    PlacementInfo:resume()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfogetplatform" class="md-nav__link">
+    PlacementInfo:getPlatform()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforaise" class="md-nav__link">
+    PlacementInfo:raise()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfolower" class="md-nav__link">
+    PlacementInfo:lower()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforotate" class="md-nav__link">
+    PlacementInfo:rotate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoterminate" class="md-nav__link">
+    PlacementInfo:terminate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoeditattribute" class="md-nav__link">
+    PlacementInfo:editAttribute()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfohaltplacement" class="md-nav__link">
+    PlacementInfo:haltPlacement()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signals" class="md-nav__link">
+    Signals
+  </a>
+  
+    <nav class="md-nav" aria-label="Signals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoactivated" class="md-nav__link">
+    PlacementInfo.Activated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoplaced" class="md-nav__link">
+    PlacementInfo.Placed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforotated" class="md-nav__link">
+    PlacementInfo.Rotated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoterminated" class="md-nav__link">
+    PlacementInfo.Terminated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfocollided" class="md-nav__link">
+    PlacementInfo.Collided
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfochangedfloors" class="md-nav__link">
+    PlacementInfo.ChangedFloors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    Data
+  </a>
+  
+    <nav class="md-nav" aria-label="Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes-table" class="md-nav__link">
+    Attributes table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#return-type-table" class="md-nav__link">
+    Return type table
+  </a>
+  
+    <nav class="md-nav" aria-label="Return type table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signals_1" class="md-nav__link">
+    Signals
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-list" class="md-nav__link">
+    State List
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-list" class="md-nav__link">
+    Error List
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Changelogs/" class="md-nav__link">
+        Changelogs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Roadmap/" class="md-nav__link">
+        Roadmap 2023
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        Troubleshooting and FAQ
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#constructors" class="md-nav__link">
+    Constructors
+  </a>
+  
+    <nav class="md-nav" aria-label="Constructors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#placementservicenew" class="md-nav__link">
+    PlacementService.new()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoactivate" class="md-nav__link">
+    PlacementInfo:activate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfonoplotactivate" class="md-nav__link">
+    PlacementInfo:noPlotActivate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforequestplacement" class="md-nav__link">
+    PlacementInfo:requestPlacement()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfogetcurrentstate" class="md-nav__link">
+    PlacementInfo:getCurrentState()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfopausecurrentstate" class="md-nav__link">
+    PlacementInfo:pauseCurrentState()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforesume" class="md-nav__link">
+    PlacementInfo:resume()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfogetplatform" class="md-nav__link">
+    PlacementInfo:getPlatform()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforaise" class="md-nav__link">
+    PlacementInfo:raise()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfolower" class="md-nav__link">
+    PlacementInfo:lower()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforotate" class="md-nav__link">
+    PlacementInfo:rotate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoterminate" class="md-nav__link">
+    PlacementInfo:terminate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoeditattribute" class="md-nav__link">
+    PlacementInfo:editAttribute()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfohaltplacement" class="md-nav__link">
+    PlacementInfo:haltPlacement()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signals" class="md-nav__link">
+    Signals
+  </a>
+  
+    <nav class="md-nav" aria-label="Signals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoactivated" class="md-nav__link">
+    PlacementInfo.Activated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoplaced" class="md-nav__link">
+    PlacementInfo.Placed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinforotated" class="md-nav__link">
+    PlacementInfo.Rotated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfoterminated" class="md-nav__link">
+    PlacementInfo.Terminated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfocollided" class="md-nav__link">
+    PlacementInfo.Collided
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#placementinfochangedfloors" class="md-nav__link">
+    PlacementInfo.ChangedFloors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    Data
+  </a>
+  
+    <nav class="md-nav" aria-label="Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes-table" class="md-nav__link">
+    Attributes table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#return-type-table" class="md-nav__link">
+    Return type table
+  </a>
+  
+    <nav class="md-nav" aria-label="Return type table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signals_1" class="md-nav__link">
+    Signals
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-list" class="md-nav__link">
+    State List
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-list" class="md-nav__link">
+    Error List
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/zblox164/PlacementService/edit/master/docs/API.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="api"><abbr title="Application Programming Interface">API</abbr><a class="headerlink" href="#api" title="Permanent link">&para;</a></h1>
+<p>This is the official <abbr title="Application Programming Interface">API</abbr> for Placement Service. This page will include every feature contained within the module and show examples of how they work.</p>
+<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permanent link">&para;</a></h2>
+<h3 id="placementservicenew">PlacementService.new()<a class="headerlink" href="#placementservicenew" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementService</span><span class="p">.</span><span class="k">new</span><span class="p">(</span><span class="kt">int</span> <span class="n">GridUnit</span><span class="p">,</span> <span class="n">instance</span> <span class="n">Itemlocation</span><span class="p">,</span> <span class="n">Enum</span> <span class="n">RotateKey</span><span class="p">,</span> <span class="n">Enum</span> <span class="n">TerminateKey</span><span class="p">,</span> <span class="n">Enum</span> <span class="n">RaiseKey</span><span class="p">,</span> <span class="n">Enum</span> <span class="n">LowerKey</span><span class="p">,</span> <span class="n">Enum</span> <span class="n">RotateKeyXBOX</span><span class="p">,</span> <span class="n">Enum</span> <span class="n">TerminateKeyXBOX</span><span class="p">,</span> <span class="n">Enum</span> <span class="n">RaiseKeyXBOX</span><span class="p">,</span> <span class="n">Enum</span> <span class="n">LowerKeyXBOX</span><span class="p">,</span> <span class="n">Instance</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">IgnoredObjects</span><span class="p">...)</span> <span class="p">|</span> <span class="n">PlacementInfo</span>
+</code></pre></div>
+Creates and returns a new <code>PlacementInfo</code> object.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">players</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">replicatedStorage</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">player</span> <span class="o">=</span> <span class="n">players</span><span class="p">.</span><span class="n">LocalPlayer</span>
+<span class="kd">local</span> <span class="n">mouse</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetMouse</span><span class="p">()</span>
+
+<span class="kd">local</span> <span class="n">remote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">remotes</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;requestPlacement&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">button</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">Parent</span>
+
+<span class="kd">local</span> <span class="n">PlacementService</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">replicatedStorage</span><span class="p">.</span><span class="n">modules</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;PlacementService&quot;</span><span class="p">))</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span><span class="p">,</span> <span class="c1">-- XBOX KeyCodes</span>
+    <span class="n">objectA</span><span class="p">,</span> <span class="n">objectB</span><span class="p">,</span> <span class="n">objectC</span><span class="p">...</span>
+<span class="p">)</span>
+</code></pre></div></p>
+<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<h3 id="placementinfoactivate">PlacementInfo:activate()<a class="headerlink" href="#placementinfoactivate" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="kt">string</span> <span class="n">ModelName</span><span class="p">,</span> <span class="n">instance</span> <span class="n">ItemHolder</span><span class="p">,</span> <span class="n">instance</span> <span class="n">Plot</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">StackableToggle</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">RotationType</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">AutoPlaceToggle</span><span class="p">)</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Activates a placement session.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">players</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">replicatedStorage</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">player</span> <span class="o">=</span> <span class="n">players</span><span class="p">.</span><span class="n">LocalPlayer</span>
+<span class="kd">local</span> <span class="n">mouse</span> <span class="o">=</span> <span class="n">player</span><span class="p">:</span><span class="n">GetMouse</span><span class="p">()</span>
+
+<span class="kd">local</span> <span class="n">remote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">remotes</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;requestPlacement&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">button</span> <span class="o">=</span> <span class="n">script</span><span class="p">.</span><span class="n">Parent</span>
+
+<span class="kd">local</span> <span class="n">PlacementService</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">replicatedStorage</span><span class="p">.</span><span class="n">modules</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;PlacementService&quot;</span><span class="p">))</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="hll"><span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="placementinfonoplotactivate">PlacementInfo:noPlotActivate()<a class="headerlink" href="#placementinfonoplotactivate" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">noPlotActivate</span><span class="p">(</span><span class="kt">string</span> <span class="n">objectName</span><span class="p">,</span> <span class="n">obj</span> <span class="n">placedObjectsLocation</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">smartRotation</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">autoPlace</span><span class="p">)</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Activates placement without the requirement of a plot. </p>
+<p><strong>Application</strong>
+Equivalent to PlacementInfo:activate() except removes the dependencies of a plot.</p>
+<h3 id="placementinforequestplacement">PlacementInfo:requestPlacement()<a class="headerlink" href="#placementinforequestplacement" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">RBXScriptSignal</span> <span class="n">PlacementRF</span><span class="p">,</span> <span class="kr">function</span> <span class="nf">callback</span><span class="p">)</span> <span class="o">|</span> <span class="n">void</span>
+</code></pre></div>
+Requests and starts the placement process on the server.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="c1">-- Assume variables were declared above ^</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">callback</span><span class="p">()</span> <span class="c1">-- This is optional</span>
+</span><span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;An object has been placed&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span>
+</span>
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p>Callback can also be invoke as shown below:
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="c1">-- Assume variables were declared above ^</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;An object has been placed&quot;</span><span class="p">)</span>
+</span><span class="hll">    <span class="kr">end</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="placementinfogetcurrentstate">PlacementInfo:getCurrentState()<a class="headerlink" href="#placementinfogetcurrentstate" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="p">|</span> <span class="kt">string</span>
+</code></pre></div>
+Returns a string that corresponds to the current state the module is in.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">contextActionService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ContextActionService&quot;</span><span class="p">)</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">placeItem</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="kr">then</span>
+</span><span class="hll">        <span class="n">contextActionService</span><span class="p">:</span><span class="n">UnbindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">)</span>
+</span><span class="hll">    <span class="kr">end</span>
+</span><span class="hll"><span class="kr">end</span>
+</span>
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="hll">    <span class="n">contextActionService</span><span class="p">:</span><span class="n">BindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">,</span> <span class="n">placeItem</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span><span class="p">)</span>
+</span><span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="placementinfopausecurrentstate">PlacementInfo:pauseCurrentState()<a class="headerlink" href="#placementinfopausecurrentstate" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">pauseCurrentState</span><span class="p">()</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Pauses the current state that the module is in.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="c1">-- Pauses the current state of the module if state == &quot;out-of_range&quot;.</span>
+</span><span class="hll"><span class="kr">while</span> <span class="kc">true</span> <span class="kr">do</span>
+</span><span class="hll">    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;out-of-range&quot;</span> <span class="kr">then</span>
+</span><span class="hll">        <span class="n">placementInfo</span><span class="p">:</span><span class="n">pauseCurrentState</span><span class="p">()</span>
+</span><span class="hll">    <span class="kr">end</span>
+</span><span class="hll"><span class="kr">end</span>
+</span></code></pre></div></p>
+<h3 id="placementinforesume">PlacementInfo:resume()<a class="headerlink" href="#placementinforesume" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">resume</span><span class="p">()</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Resumes any state that has been paused.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="c1">-- Pauses the current state of the module if state == &quot;out-of_range&quot; for 5 seconds.</span>
+<span class="kr">while</span> <span class="kc">true</span> <span class="kr">do</span>
+    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
+
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;out-of-range&quot;</span> <span class="kr">then</span>
+        <span class="n">placementInfo</span><span class="p">:</span><span class="n">pauseCurrentState</span><span class="p">()</span>
+
+<span class="hll">        <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="n">placementInfo</span><span class="p">:</span><span class="n">resume</span><span class="p">()</span>
+</span>    <span class="kr">end</span>
+<span class="kr">end</span>
+</code></pre></div></p>
+<h3 id="placementinfogetplatform">PlacementInfo:getPlatform()<a class="headerlink" href="#placementinfogetplatform" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="p">|</span> <span class="kt">string</span>
+</code></pre></div>
+Returns the current platform used by the player in the form of a string.  Platforms: "Mobile", "Console", or "PC".</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">connection</span>
+</span><span class="hll">
+</span><span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">clientPlacement</span><span class="p">()</span>
+</span><span class="hll">    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+</span><span class="hll">        <span class="n">contextActionService</span><span class="p">:</span><span class="n">UnbindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">)</span>
+</span><span class="hll">    <span class="kr">elseif</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+</span><span class="hll">        <span class="c1">-- Disconnect mobile inputs</span>
+</span><span class="hll">        <span class="n">connection</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+</span><span class="hll">    <span class="kr">end</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span>
+</span><span class="hll">
+</span><span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">startPlacement</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+</span><span class="hll">    <span class="c1">-- Handle platforms</span>
+</span><span class="hll">    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">~=</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+</span><span class="hll">        <span class="n">contextActionService</span><span class="p">:</span><span class="n">BindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">,</span> <span class="n">clientPlacement</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">)</span>
+</span><span class="hll">    <span class="kr">else</span>
+</span><span class="hll">        <span class="c1">-- Handle mobile inputs</span>
+</span><span class="hll">        <span class="n">connection</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">place</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">clientPlacement</span><span class="p">)</span>
+</span><span class="hll">    <span class="kr">end</span>
+</span><span class="hll">
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span>
+</span>
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="hll">    <span class="n">startPlacement</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">)</span>
+</span><span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="placementinforaise">PlacementInfo:raise()<a class="headerlink" href="#placementinforaise" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">raise</span><span class="p">()</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Manually raises the objects floor/default y value. Used mainly for mobile support.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">connection1</span>
+</span><span class="hll"><span class="kd">local</span> <span class="n">connection2</span>
+</span><span class="hll">
+</span><span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">raise</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">raise</span><span class="p">()</span>
+</span><span class="hll"><span class="kr">end</span>
+</span>
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">clientPlacement</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">contextActionService</span><span class="p">:</span><span class="n">UnbindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">)</span>
+    <span class="kr">elseif</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+<span class="hll">        <span class="n">connection1</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+</span><span class="hll">        <span class="n">connection2</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+</span>    <span class="kr">end</span>
+
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">startPlacement</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="c1">-- Handle platforms</span>
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">~=</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">contextActionService</span><span class="p">:</span><span class="n">BindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">,</span> <span class="n">clientPlacement</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">)</span>
+    <span class="kr">else</span>
+        <span class="n">connection1</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">place</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">clientPlacement</span><span class="p">)</span>
+<span class="hll">        <span class="n">connection2</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">raise</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">raise</span><span class="p">)</span>
+</span>    <span class="kr">end</span>
+
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">startPlacement</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="placementinfolower">PlacementInfo:lower()<a class="headerlink" href="#placementinfolower" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">lower</span><span class="p">()</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Manually lowers the objects floor/default y value. Used mainly for mobile support.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">connection1</span>
+<span class="kd">local</span> <span class="n">connection2</span>
+
+<span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">lower</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">lower</span><span class="p">()</span>
+</span><span class="hll"><span class="kr">end</span>
+</span>
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">clientPlacement</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">contextActionService</span><span class="p">:</span><span class="n">UnbindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">)</span>
+    <span class="kr">elseif</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">connection1</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+<span class="hll">        <span class="n">connection2</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+</span>    <span class="kr">end</span>
+
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">startPlacement</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="c1">-- Handle platforms</span>
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">~=</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">contextActionService</span><span class="p">:</span><span class="n">BindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">,</span> <span class="n">clientPlacement</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">)</span>
+    <span class="kr">else</span>
+        <span class="n">connection1</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">place</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">clientPlacement</span><span class="p">)</span>
+<span class="hll">        <span class="n">connection2</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">raise</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">lower</span><span class="p">)</span>
+</span>    <span class="kr">end</span>
+
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">startPlacement</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="placementinforotate">PlacementInfo:rotate()<a class="headerlink" href="#placementinforotate" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">rotate</span><span class="p">()</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Manually rotates the objects. Used mainly for mobile support.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">connection1</span>
+<span class="kd">local</span> <span class="n">connection2</span>
+
+<span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">rotate</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">rotate</span><span class="p">()</span>
+</span><span class="hll"><span class="kr">end</span>
+</span>
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">clientPlacement</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">contextActionService</span><span class="p">:</span><span class="n">UnbindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">)</span>
+    <span class="kr">elseif</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">connection1</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+<span class="hll">        <span class="n">connection2</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+</span>    <span class="kr">end</span>
+
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">startPlacement</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="c1">-- Handle platforms</span>
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">~=</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">contextActionService</span><span class="p">:</span><span class="n">BindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">,</span> <span class="n">clientPlacement</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">)</span>
+    <span class="kr">else</span>
+        <span class="n">connection1</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">place</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">clientPlacement</span><span class="p">)</span>
+<span class="hll">        <span class="n">connection2</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">raise</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">rotate</span><span class="p">)</span>
+</span>    <span class="kr">end</span>
+
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">startPlacement</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="placementinfoterminate">PlacementInfo:terminate()<a class="headerlink" href="#placementinfoterminate" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">terminate</span><span class="p">()</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Manually terminates a placement session. Equivelent to pressing the terminate key on PC or XBOX while placing. Is also used for terminating placement sessions on mobile.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">cancelRemote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;cancelPlacement&quot;</span><span class="p">)</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">cancelRemote</span><span class="p">.</span><span class="n">OnClientEvent</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">terminate</span><span class="p">()</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Alternative Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">connection1</span>
+<span class="kd">local</span> <span class="n">connection2</span>
+
+<span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">terminate</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">terminate</span><span class="p">()</span>
+</span><span class="hll"><span class="kr">end</span>
+</span>
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">clientPlacement</span><span class="p">()</span>
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">contextActionService</span><span class="p">:</span><span class="n">UnbindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">)</span>
+    <span class="kr">elseif</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getCurrentState</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;inactive&quot;</span> <span class="ow">and</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">connection1</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+<span class="hll">        <span class="n">connection2</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+</span>    <span class="kr">end</span>
+
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">startPlacement</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="c1">-- Handle platforms</span>
+    <span class="kr">if</span> <span class="n">placementInfo</span><span class="p">:</span><span class="n">getPlatform</span><span class="p">()</span> <span class="o">~=</span> <span class="s2">&quot;Mobile&quot;</span> <span class="kr">then</span>
+        <span class="n">contextActionService</span><span class="p">:</span><span class="n">BindAction</span><span class="p">(</span><span class="s2">&quot;place&quot;</span><span class="p">,</span> <span class="n">clientPlacement</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">)</span>
+    <span class="kr">else</span>
+        <span class="n">connection1</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">place</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">clientPlacement</span><span class="p">)</span>
+<span class="hll">        <span class="n">connection2</span> <span class="o">=</span> <span class="n">placementInfo</span><span class="p">.</span><span class="n">MobileUI</span><span class="p">.</span><span class="n">raise</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">terminate</span><span class="p">)</span>
+</span>    <span class="kr">end</span>
+
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">startPlacement</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="placementinfoeditattribute">PlacementInfo:editAttribute()<a class="headerlink" href="#placementinfoeditattribute" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">editAttribute</span><span class="p">(</span><span class="kt">string</span> <span class="n">attributeName</span><span class="p">,</span> <span class="n">any</span> <span class="n">input</span><span class="p">)</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Changes the value of the attribute inputted to the value specified (if the attribute exists and the value is compatible with the attribute).</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+<span class="kd">local</span> <span class="n">lerp</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">lerpToggle</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">lerp</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">lerp</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">editAttribute</span><span class="p">(</span><span class="s2">&quot;Interpolation&quot;</span><span class="p">,</span> <span class="n">lerp</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="placementinfohaltplacement">PlacementInfo:haltPlacement()<a class="headerlink" href="#placementinfohaltplacement" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">:</span><span class="n">haltPlacement</span><span class="p">()</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Pauses the automatic placement. This does not function like <code>PlacementInfo:terminate()</code> as it does not cancel placement.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">mouse</span><span class="p">.</span><span class="n">Button1Up</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">placementInfo</span><span class="p">:</span><span class="n">haltPlacement</span><span class="p">()</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h2 id="signals">Signals<a class="headerlink" href="#signals" title="Permanent link">&para;</a></h2>
+<h3 id="placementinfoactivated">PlacementInfo.Activated<a class="headerlink" href="#placementinfoactivated" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">.</span><span class="n">Activated</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Fires on each activation.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">cancelRemote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;cancelPlacement&quot;</span><span class="p">)</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">placementInfo</span><span class="p">.</span><span class="n">Activated</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Activated placement!&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="placementinfoplaced">PlacementInfo.Placed<a class="headerlink" href="#placementinfoplaced" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">.</span><span class="n">Placed</span> <span class="p">|</span> <span class="kt">string</span>
+</code></pre></div>
+Fires once an object has been placed and returns it.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">cancelRemote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;cancelPlacement&quot;</span><span class="p">)</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">placementInfo</span><span class="p">.</span><span class="n">Placed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">objectName</span><span class="p">)</span>
+</span><span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="n">objectName</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="placementinforotated">PlacementInfo.Rotated<a class="headerlink" href="#placementinforotated" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">.</span><span class="n">Rotated</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Fires once each time the object has been rotated either from user input or a manual rotation (PlacementInfo:rotate()).</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">cancelRemote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;cancelPlacement&quot;</span><span class="p">)</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">placementInfo</span><span class="p">.</span><span class="n">Rotated</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rotated!&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="placementinfoterminated">PlacementInfo.Terminated<a class="headerlink" href="#placementinfoterminated" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">.</span><span class="n">Terminated</span> <span class="p">|</span> <span class="k">void</span>
+</code></pre></div>
+Fires once each time placement has been terminated either from user input or a manual termination (PlacementInfo:terminate()).</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">cancelRemote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;cancelPlacement&quot;</span><span class="p">)</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">placementInfo</span><span class="p">.</span><span class="n">Terminated</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Terminated!&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="placementinfocollided">PlacementInfo.Collided<a class="headerlink" href="#placementinfocollided" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">.</span><span class="n">Collided</span> <span class="p">|</span> <span class="n">instance</span>
+</code></pre></div>
+Fires once each time the object collides with an object and returns the collided object.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">cancelRemote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;cancelPlacement&quot;</span><span class="p">)</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">placementInfo</span><span class="p">.</span><span class="n">Collided</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">hit</span><span class="p">)</span>
+</span><span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="nb">tostring</span><span class="p">(</span><span class="n">hit</span><span class="p">))</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="placementinfochangedfloors">PlacementInfo.ChangedFloors<a class="headerlink" href="#placementinfochangedfloors" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">PlacementInfo</span><span class="p">.</span><span class="n">ChangedFloors</span> <span class="p">|</span> <span class="kt">bool</span>
+</code></pre></div>
+Fires once each time the Y level has been changed either from user input or a manual change (PlacementInfo:raise/lower()). Returns a boolean value (true up, false down) as the direction. Does not account for stacking.</p>
+<p><strong>Application</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume variables were declared above ^</span>
+
+<span class="hll"><span class="kd">local</span> <span class="n">cancelRemote</span> <span class="o">=</span> <span class="n">replicatedStorage</span><span class="p">:</span><span class="n">WaitForChild</span><span class="p">(</span><span class="s2">&quot;cancelPlacement&quot;</span><span class="p">)</span>
+</span>
+<span class="kd">local</span> <span class="n">placementInfo</span> <span class="o">=</span> <span class="n">PlacementService</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="c1">-- Grid Unit</span>
+    <span class="n">replicatedStorage</span><span class="p">.</span><span class="n">models</span><span class="p">,</span> <span class="c1">-- Item Location</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">R</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">U</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">L</span><span class="p">,</span> <span class="c1">-- PC KeyCodes</span>
+    <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonR1</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">ButtonX</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadUp</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">DPadDown</span> <span class="c1">-- XBOX KeyCodes</span>
+<span class="p">)</span>
+
+<span class="n">button</span><span class="p">.</span><span class="n">MouseButton1Click</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">activate</span><span class="p">(</span><span class="s2">&quot;Chair&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">itemHolder</span><span class="p">,</span> <span class="n">workspace</span><span class="p">.</span><span class="n">base</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="n">mouse</span><span class="p">.</span><span class="n">Button1Down</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="n">placementInfo</span><span class="p">:</span><span class="n">requestPlacement</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="hll"><span class="n">placementInfo</span><span class="p">.</span><span class="n">ChangedFloors</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+</span><span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+</span><span class="hll"><span class="kr">end</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h2 id="data">Data<a class="headerlink" href="#data" title="Permanent link">&para;</a></h2>
+<h3 id="attributes-table">Attributes table<a class="headerlink" href="#attributes-table" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AngleTilt</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>AngleTiltAmplitude</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>AudioFeedback</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>AudioVolume</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>BuildModePlacement</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>CollisionColor3</code></td>
+<td>Color3</td>
+</tr>
+<tr>
+<td><code>Collisions</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>DisplayGridTexture</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>EnableFloors</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>FloorStep</code></td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>GridFadeIn</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>GridFadeOut</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>GridTextureID</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>HapticFeedback</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>HapticVibrationAmount</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>HitboxColor3</code></td>
+<td>Color3</td>
+</tr>
+<tr>
+<td><code>HitboxTransparency</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>IncludeSelectionBox</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>InstantActivation</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>Interpolation</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>InvertAngleTilt</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>LerpSpeed</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>LineThickness</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>LineTransparency</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>MaxHeight</code></td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>MaxRange</code></td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>MoveByGrid</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>PlacementCooldown</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>PreferSignals</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>RemoveCollisionsIfIgnored</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>RotationStep</code></td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>SelectionBoxCollisionColor3</code></td>
+<td>Color3</td>
+</tr>
+<tr>
+<td><code>SelectionBoxColor3</code></td>
+<td>Color3</td>
+</tr>
+<tr>
+<td><code>SmartDisplay</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>SoundID</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>TargetFPS</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>TransparencyDelta</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>TransparentModel</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>UseHighlights</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>Version</code></td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<h3 id="return-type-table">Return type table<a class="headerlink" href="#return-type-table" title="Permanent link">&para;</a></h3>
+<h4 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Return Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PlacementService.new()</code></td>
+<td>PlacementInfo</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:activate()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:noPlotActivate()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:requestPlacement()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:terminate()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:raise()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:lower()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:rotate()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:getCurrentState()</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:getPlatform()</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:pauseCurrentState()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:resume()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:editAttribute()</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo:haltPlacement()</code></td>
+<td>void</td>
+</tr>
+</tbody>
+</table>
+<h4 id="signals_1">Signals<a class="headerlink" href="#signals_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Return Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PlacementInfo.Activated</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo.Placed</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>PlacementInfo.Rotated</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo.Terminated</code></td>
+<td>void</td>
+</tr>
+<tr>
+<td><code>PlacementInfo.Collided</code></td>
+<td>instance</td>
+</tr>
+<tr>
+<td><code>PlacementInfo.ChangedFloors</code></td>
+<td>void</td>
+</tr>
+</tbody>
+</table>
+<h3 id="state-list">State List<a class="headerlink" href="#state-list" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>When active</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>movement</code></td>
+<td>When the object is not colliding or out of range and is not requesting placement.</td>
+</tr>
+<tr>
+<td><code>placing</code></td>
+<td>Active on the frame before requesting a placement to the server.</td>
+</tr>
+<tr>
+<td><code>colliding</code></td>
+<td>When the object collides with another object on the plane/plot.</td>
+</tr>
+<tr>
+<td><code>inactive</code></td>
+<td>When no other state is active and the module is not in use by the player.</td>
+</tr>
+<tr>
+<td><code>out-of-range</code></td>
+<td>When the object is not colliding but is out of the range set by the developer.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="error-list">Error List<a class="headerlink" href="#error-list" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>101</code></td>
+<td>Your trying to activate placement too fast! Please slow down</td>
+</tr>
+<tr>
+<td><code>201</code></td>
+<td>Error code 201: The object that the model is moving on is not scaled correctly. Consider changing it.</td>
+</tr>
+<tr>
+<td><code>301</code></td>
+<td>Error code 301: You have improperly setup your callback function. Please input a valid callback</td>
+</tr>
+<tr>
+<td><code>401</code></td>
+<td>Error code 401: Grid size is too close to the plot size. To fix this, try lowering the grid size.</td>
+</tr>
+<tr>
+<td><code>501</code></td>
+<td>Error code 501: Cannot find a surface to place on. Please make sure one is available.</td>
+</tr>
+</tbody>
+</table>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Changelogs/" class="md-footer__link md-footer__link--next" aria-label="Next: Changelogs" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Changelogs
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://www.youtube.com/c/zblox164" target="_blank" rel="noopener" title="Zblox&#39;s Youtube" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://www.roblox.com/library/5073110873/Placement-Service" target="_blank" rel="noopener" title="Placement Service Link" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M48 0C21.53 0 0 21.53 0 48v64c0 8.84 7.16 16 16 16h80V48C96 21.53 74.47 0 48 0zm208 412.57V352h288V96c0-52.94-43.06-96-96-96H111.59C121.74 13.41 128 29.92 128 48v368c0 38.87 34.65 69.65 74.75 63.12C234.22 474 256 444.46 256 412.57zM288 384v32c0 52.93-43.06 96-96 96h336c61.86 0 112-50.14 112-112 0-8.84-7.16-16-16-16H288z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://discord.gg/QA2DNvvCn2" target="_blank" rel="noopener" title="Zblox&#39;s Discord Server" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541zM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "content.tabs.link", "navigation.tracking", "search.highlight", "search.share", "search.suggest"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      
+    
+  </body>
+</html>

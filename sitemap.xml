@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://zblox164.github.io/PlacementService/</loc>
+         <lastmod>2023-04-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://zblox164.github.io/PlacementService/API/</loc>
+         <lastmod>2023-04-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://zblox164.github.io/PlacementService/Changelogs/</loc>
+         <lastmod>2023-04-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://zblox164.github.io/PlacementService/Roadmap/</loc>
+         <lastmod>2023-04-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://zblox164.github.io/PlacementService/Troubleshooting/</loc>
+         <lastmod>2023-04-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://zblox164.github.io/PlacementService/tutorial/</loc>
+         <lastmod>2023-04-14</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>
