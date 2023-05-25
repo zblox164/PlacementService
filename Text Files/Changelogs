@@ -2,7 +2,7 @@
 
 Placement Service
 
-Current Version - V1.6.1
+Current Version - V1.6.2
 Written by zblox164. Released on 2020-05-22
 
 Change log:
@@ -160,6 +160,12 @@ Change log:
 	Module changes
 	- Bug fixes from last update
 	- Server code bug fix
+2023-05-24 V1.6.2 - Details
+	Module changes
+	- Fixed bug with raising and lowering floors
+	- Fixed server code bug
+	- Removed newly deprecated raycast code
+	- Minor code improvements
 ]]
 
 -- Created and written by zblox164 (2020-2022)
