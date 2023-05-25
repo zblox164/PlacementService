@@ -121,7 +121,7 @@ local function checkHitbox(character, object, plot)
 	-- Checks if there is collision on any object that is not a child of the object and is not a child of the player
 	for i = 1, #collisionPoints, 1 do
 		if not collisionPoints[i].CanTouch then continue end
-		if not (not collisionPoints[i]:IsDescendantOf(object) and not collisionPoints[i]:IsDescendantOf(character)) and not collisionPoints[i]:IsDescendantOf() then continue end
+		if not (not collisionPoints[i]:IsDescendantOf(object) and not collisionPoints[i]:IsDescendantOf(character)) and not (collisionPoints[i] == plot) then continue end
 
 		return true
 	end
