@@ -4,7 +4,7 @@
 
 Thank you for using Placement Service!
 
-Current Version - V1.6.1
+Current Version - V1.6.2
 Written by zblox164. Initial release (V1.0.0) on 2020-05-22
 
 ]]--
@@ -142,6 +142,7 @@ local y: number
 local dirX: number
 local dirZ: number
 local initialY: number
+local floorHeight: number = 0
 
 -- Placement Variables
 local hitbox
@@ -224,7 +225,8 @@ end
 local function raiseFloor(actionName: string, inputState: Enum.UserInputState, inputObj: InputObject?)
 	if not (currentState ~= 4 and inputState == Enum.UserInputState.Begin) then return end
 	if not (enableFloors and not stackable) then return end	
-	y += floor(abs(floorStep))
+	floorHeight += floor(abs(floorStep))
+	floorHeight = math.clamp(floorHeight, 0, maxHeight)
 		
 	if preferSignals then changeFloors:Fire(true) end
 end
@@ -232,8 +234,9 @@ end
 local function lowerFloor(actionName: string, inputState:Enum.UserInputState, inputObj: InputObject?)
 	if not (currentState ~= 4 and inputState == Enum.UserInputState.Begin) then return end
 	if not (enableFloors and not stackable) then return end
-	y -= floor(abs(floorStep))
-
+	floorHeight -= floor(abs(floorStep))
+	floorHeight = math.clamp(floorHeight, 0, maxHeight)
+	
 	if preferSignals then changeFloors:Fire(false) end
 end
 
@@ -264,6 +267,7 @@ end
 
 local function displaySelectionBox()
 	local selectionBox
+	
 	if useHighlights then
 		selectionBox = Instance.new("Highlight")
 		selectionBox.OutlineColor = selectionColor
@@ -282,6 +286,20 @@ local function displaySelectionBox()
 	selectionBox.Parent = player.PlayerGui
 	selectionBox.Name = "outline"
 	selection = selectionBox
+end
+
+-- Removes any textures/grids
+local function removeTexture()
+	for i, texture: Instance in ipairs(plot:GetChildren()) do
+		if not (texture.Name == "GridTexture" and texture:IsA("Texture")) then continue end
+		if not gridFadeOut then texture:Destroy(); break end	
+
+		local tween = tweenService:Create(texture, fade, {Transparency = 1})
+		tween:Play()
+
+		local connection = tween.Completed:Connect(function() texture:Destroy() end)
+		connection:Disconnect()
+	end
 end
 
 local function createAudioFeedback()
@@ -305,20 +323,19 @@ end
 
 -- Handles rotation of the model
 local function ROTATE(actionName: string, inputState: Enum.UserInputState, inputObj: InputObject?)
-	if currentState ~= 4 and currentState ~= 2 and inputState == Enum.UserInputState.Begin then
-		if smartRot then
-			-- Rotates the model depending on if currentRot is true/false
-			if currentRot then rotation += rotationStep; else rotation -= rotationStep end
-		else
-			rotation += rotationStep
-		end
-
-		-- Toggles currentRot
-		local rotateAmount = round(rotation/90)
-		currentRot = rotateAmount%2 == 0 and true or false
-		if rotation >= 360 then rotation = 0 end
-		if preferSignals then rotated:Fire() end
+	if not (currentState ~= 4 and currentState ~= 2 and inputState == Enum.UserInputState.Begin) then return end
+	if smartRot then
+		-- Rotates the model depending on if currentRot is true/false
+		if currentRot then rotation += rotationStep; else rotation -= rotationStep end
+	else
+		rotation += rotationStep
 	end
+
+	-- Toggles currentRot
+	local rotateAmount = round(rotation/90)
+	currentRot = rotateAmount%2 == 0 and true or false
+	if rotation >= 360 then rotation = 0 end
+	if preferSignals then rotated:Fire() end
 end
 
 -- Calculates the Y position to be ontop of the plot (all objects) and any object (when stacking)
@@ -411,7 +428,7 @@ local function calculateItemLocation(last, final: boolean): CFrame
 	local pltCFrame: CFrame = plot.CFrame
 	local positionCFrame = cframe(x, 0, z)*cframe(offsetX, 0, offsetZ)
 	
-	y = calculateYPos(plot.Position.Y, plot.Size.Y, primary.Size.Y, 1)
+	y = calculateYPos(plot.Position.Y, plot.Size.Y, primary.Size.Y, 1) + floorHeight
 
 	-- Changes y depending on mouse target
 	if stackable and target and (target:IsDescendantOf(placedObjects) or target == plot) then
@@ -474,30 +491,30 @@ end
 
 -- Sets the position of the object
 local function translateObj(dt)
-	if currentState ~= 2 and currentState ~= 4 then
-		range = false
-		setCurrentState(1)
-		
-		if getRange() > maxRange then
-			setCurrentState(5)
+	if not (currentState ~= 2 and currentState ~= 4) then return end
+	
+	range = false
+	setCurrentState(1)
 
-			if preferSignals then outOfRange:Fire() end
+	if getRange() > maxRange then
+		setCurrentState(5)
 
-			range = true
-		end
+		if preferSignals then outOfRange:Fire() end
 
-		checkHitbox()
-		editHitboxColor()
+		range = true
+	end
 
-		if removePlotDependencies then plot = findPlot() or plot end
+	checkHitbox()
+	editHitboxColor()
 
-		if interpolation and not setup then
-			object:PivotTo(primary.CFrame:Lerp(calculateItemLocation(primary.CFrame.Position, false), speed*dt*targetFPS))
-			hitbox:PivotTo(calculateItemLocation(hitbox.CFrame.Position, true))	
-		else
-			object:PivotTo(calculateItemLocation(primary.CFrame.Position, false))
-			hitbox:PivotTo(calculateItemLocation(hitbox.CFrame.Position, true))	
-		end
+	if removePlotDependencies then plot = findPlot() or plot end
+
+	if interpolation and not setup then
+		object:PivotTo(primary.CFrame:Lerp(calculateItemLocation(primary.CFrame.Position, false), speed*dt*targetFPS))
+		hitbox:PivotTo(calculateItemLocation(hitbox.CFrame.Position, true))	
+	else
+		object:PivotTo(calculateItemLocation(primary.CFrame.Position, false))
+		hitbox:PivotTo(calculateItemLocation(hitbox.CFrame.Position, true))	
 	end
 end
 
@@ -551,18 +568,7 @@ local function TERMINATE_PLACEMENT()
 	setCurrentState(4)
 
 	-- Removes grid texture from plot
-	if displayGridTexture and not removePlotDependencies then
-		for i, texture: Instance in ipairs(plot:GetChildren()) do
-			if not (texture.Name == "GridTexture" and texture:IsA("Texture")) then continue end
-			if not gridFadeOut then texture:Destroy(); break end	
-			
-			local tween = tweenService:Create(texture, fade, {Transparency = 1})
-			tween:Play()
-
-			local connection = tween.Completed:Connect(function() texture:Destroy() end)
-			connection:Disconnect()
-		end
-	end
+	if displayGridTexture and not removePlotDependencies then removeTexture() end
 
 	if audibleFeedback and placementSFX then
 		task.spawn(function()
@@ -694,36 +700,37 @@ local function roundInts()
 	updateAttributes()
 end
 
-local function PLACEMENT(self, Function: RemoteFunction, callback:() -> ()?)
-	if currentState ~= 3 and currentState ~= 4 and currentState ~= 5 and object then
-		local cf: CFrame
-		local objectName = tostring(object)
-
-		-- Makes sure you have waited the cooldown period before placing
-		if not coolDown(player, placementCooldown) then return end
-		if not (currentState == 2 or currentState == 1) then return end
-		cf = getFinalCFrame()
-		checkHitbox()
-
-		if Function:InvokeServer(object.Name, placedObjects, self.Prefabs, cf, plot) then
-			if buildModePlacement then setCurrentState(1) else TERMINATE_PLACEMENT() end
-			playAudio()
-
-			if preferSignals then
-				placed:Fire(objectName)
-			else
-				xpcall(function()
-					if callback then callback() end
-				end, function(err)
-					warn(messages["301"] .. "\n\n" .. err)
-				end)
-			end
-
-			if hapticFeedback and guiService:IsTenFootInterface() then
-				createHapticFeedback()
-			end
-		end
+local function placementFeedback(objectName, callback)
+	if preferSignals then
+		placed:Fire(objectName)
+	else
+		xpcall(function()
+			if callback then callback() end
+		end, function(err)
+			warn(messages["301"] .. "\n\n" .. err)
+		end)
 	end
+end
+
+local function PLACEMENT(self, Function: RemoteFunction, callback:() -> ()?)
+	if not (currentState ~= 3 and currentState ~= 4 and currentState ~= 5 and object) then return end
+	
+	local cf: CFrame
+	local objectName = tostring(object)
+
+	-- Makes sure you have waited the cooldown period before placing
+	if not coolDown(player, placementCooldown) then return end
+	if not (currentState == 2 or currentState == 1) then return end
+	cf = getFinalCFrame()
+	checkHitbox()
+
+	print(objectName, placedObjects, self.Prefabs, Function, plot)
+	if not Function:InvokeServer(objectName, placedObjects, self.Prefabs, cf, plot) then return end	
+	if buildModePlacement then setCurrentState(1) else TERMINATE_PLACEMENT() end
+	if hapticFeedback and guiService:IsTenFootInterface() then createHapticFeedback() end
+
+	playAudio()
+	placementFeedback(objectName, callback)
 end
 
 -- Returns the current platform
@@ -781,7 +788,7 @@ function PlacementInfo.new(GridUnit: number, Prefabs: Instance,
 	self.XBOX_ROTATE = xboxRotate
 	self.XBOX_TERMINATE = xboxTerminate
 	self.XBOX_RAISE = xboxRaise
-	self.Version = "1.6.1"
+	self.Version = "1.6.2"
 	self.Creator = "zblox164"
 	self.MobileUI = script:FindFirstChildOfClass("ScreenGui")
 	self.IgnoredItems = {...}
@@ -868,7 +875,7 @@ function PlacementInfo:editAttribute(attribute: string, input: any)
 end
 
 -- Requests to place down the object
-function PlacementInfo:requestPlacement(func: RemoteFunction, callback: (...any?) -> ()) 
+function PlacementInfo:requestPlacement(func: RemoteFunction, callback: (...any?) -> ())
 	if not autoPlace then PLACEMENT(self, func, callback); return end
 	running = true
 
@@ -920,10 +927,10 @@ function PlacementInfo:activate(ID: string, PlacedObjects: Instance, Plot: BaseP
 
 	-- Allows stackable objects depending on stk variable given by the user
 	raycastParams.FilterDescendantsInstances = {placedObjects, character, unpack(self.IgnoredItems)}
-	raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+	raycastParams.FilterType = Enum.RaycastFilterType.Exclude
 	if Stackable then
 		raycastParams.FilterDescendantsInstances = {object, character, unpack(self.IgnoredItems)}
-		raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+		raycastParams.FilterType = Enum.RaycastFilterType.Exclude
 	end
 
 	-- Toggles buildmode placement (infinite placement) depending on if set true by the user
@@ -933,7 +940,7 @@ function PlacementInfo:activate(ID: string, PlacedObjects: Instance, Plot: BaseP
 	end
 
 	-- Gets the initial y pos and gives it to y
-	initialY = calculateYPos(Plot.Position.Y, Plot.Size.Y, object.PrimaryPart.Size.Y, 0)
+	initialY = calculateYPos(Plot.Position.Y, Plot.Size.Y, object.PrimaryPart.Size.Y, 1)
 	y = initialY
 	removePlotDependencies = false
 	autoPlace = AutoPlace
@@ -1006,7 +1013,7 @@ function PlacementInfo:noPlotActivate(ID: string, PlacedObjects: Instance, Smart
 	removePlotDependencies = true
 	mouse.TargetFilter = object
 	raycastParams.FilterDescendantsInstances = {object, character, unpack(self.IgnoredItems)}
-	raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+	raycastParams.FilterType = Enum.RaycastFilterType.Exclude
 
 	-- Toggles buildmode placement (infinite placement) depending on if set true by the user
 	canActivate = false
