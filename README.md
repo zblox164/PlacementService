@@ -1,5 +1,7 @@
 # Placement Service
 
+## THIS MODULE MAY NOT WORK AS INTENDED. IT HAS BEEN OVER 2 YEARS SINCE THE LAST UPDATE AND I DO NOT KNOW WHEN I'LL BE ABLE TO UPDATE IT. THIS MODULE HAS NOT BEEN FORGOTTEN, JUST TEMPORARILY OUT OF DEVELOPMENT. I HOPE TO RETURN SOON TO THIS PROJECT
+
 This module was developed using and intended for Roblox Studio
 
 Placement Service is an advanced kit that allows you to create a fully functional sandbox tycoon style placement system without going through the hassle of creating one from scratch yourself! With countless polished and easy to use features, anyone with basic Luau knowledge can make a unique and secure placement system in minutes!
